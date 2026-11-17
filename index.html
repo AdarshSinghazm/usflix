@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>USFLIX - Aditya & Shradhha: The Complete Series</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,600;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22 font-weight=%22900%22 fill=%22%23E50914%22>U</text></svg>">
+</head>
+<body>
+
+  <!-- TOP NAVIGATION BAR -->
+  <header class="navbar" id="navbar">
+    <div class="nav-left">
+      <a href="#home" class="logo">USFLIX</a>
+      <nav class="nav-links">
+        <a href="gallery.html" class="nav-gallery-pill">Explore Our Gallery</a>
+        <a href="#love-letters">Love Letters</a>
+        <a href="javascript:void(0)" onclick="openSoundtrackModal()">Our Soundtracks</a>
+        <a href="javascript:void(0)" onclick="openEpisodesModal()">Seasons & Years</a>
+      </nav>
+    </div>
+    <div class="nav-right">
+      <button class="nav-icon-btn" id="searchBtn" title="Search memories">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+      </button>
+      <button class="nav-icon-btn" id="soundFxToggle" title="Surround Sound Audio" onclick="toggleAmbientMusic()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4.93 19.07a10 10 0 0 1 0-14.14M2 12h.01M19.07 4.93a10 10 0 0 1 0 14.14M22 12h.01M8.46 15.54a5 5 0 0 1 0-7.08M15.54 8.46a5 5 0 0 1 0 7.08M12 12h.01"/>
+        </svg>
+      </button>
+      <div class="profile-wrapper">
+        <div class="profile-pill" id="profilePill">
+          <div class="profile-avatar">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+          </div>
+          <span class="profile-name">Aditya & Shradhha</span>
+          <svg class="dropdown-caret" viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg>
+        </div>
+        <div class="profile-menu" id="profileMenu">
+          <div class="profile-menu-item active-user">
+            <div class="mini-avatar pink">S</div>
+            <span>Shradhha</span>
+          </div>
+          <div class="profile-menu-item">
+            <div class="mini-avatar blue">A</div>
+            <span>Aditya</span>
+          </div>
+          <div class="profile-menu-item">
+            <div class="mini-avatar gold">♥</div>
+            <span>Our Shared Vault</span>
+          </div>
+          <div class="profile-divider"></div>
+          <div class="profile-menu-item secondary" onclick="openEpisodesModal()">Manage Memories</div>
+          <div class="profile-menu-item secondary" onclick="alert('Account Status: Bound Forever (Lifetime Access)')">Account Settings</div>
+          <div class="profile-menu-item secondary" onclick="alert('No sign out allowed. Forever together!')">Sign Out of USFLIX</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- SEARCH OVERLAY BAR (Hidden by default) -->
+  <div class="search-bar-container" id="searchBarContainer">
+    <div class="search-input-box">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="search-icon"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+      <input type="text" id="memorySearchInput" placeholder="Search dates, trips, songs, love letters, cafe memories..." autocomplete="off">
+      <button class="search-close-btn" id="searchCloseBtn">&times;</button>
+    </div>
+  </div>
+
+  <!-- HERO BILLBOARD SECTION -->
+  <section class="hero" id="home">
+    <div class="hero-bg" style="background-image: url('heroimg.png');"></div>
+    <div class="hero-vignette-left"></div>
+    <div class="hero-vignette-bottom"></div>
+
+    <div class="hero-content">
+      <div class="hero-badge-row">
+        <span class="red-bar"></span>
+        <span class="original-tag">A USFLIX ORIGINAL DOCUSERIES</span>
+      </div>
+
+      <h1 class="hero-title">ADITYA & SHRADHHA<br>THE COMPLETE SERIES</h1>
+
+      <div class="hero-meta">
+        <span class="match-score">
+          <svg class="heart-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+          99.8% Match for Us
+        </span>
+        <span class="meta-seasons">3 Seasons</span>
+        <span class="meta-quality">4K Ultra HD</span>
+      </div>
+
+      <div class="hero-actions">
+        <button class="btn btn-primary" onclick="openPlayerModal('Fav Episode: Aditya & Shradhha', 'video.mp4')">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+          <span>Fav Episode</span>
+        </button>
+        <button class="btn btn-secondary" onclick="openEpisodesModal()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+          <span>Episodes & More Info</span>
+        </button>
+        <button class="btn-circle" id="heroAddBtn" title="Add to My List" onclick="toggleMyList(this)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- MAIN ROWS CONTAINER -->
+  <main class="content-container">
+
+    <!-- ROW 1: FAV BEST MOMENTS -->
+    <section class="media-row-section" id="top-dates">
+      <div class="row-header">
+        <div class="top-10-badge-group">
+          <span class="top-badge">FAV</span>
+          <h2 class="row-title">OUR BEST MOMENTS TOGETHER</h2>
+        </div>
+      </div>
+
+      <div class="top10-slider">
+        <!-- Rank 1 -->
+        <div class="top10-card" onclick="openMemoryByIndex(0)">
+          <div class="top10-rank-num">1</div>
+          <div class="top10-poster-wrap">
+            <img src="img1.jpg" alt="Parisian Terrace Coffee" class="top10-img" loading="lazy">
+            <div class="top10-bottom-caption">
+              <span class="tag-green">#1 in Heart</span>
+              <p class="date-name">Parisian Terrace Coffee</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Rank 2 -->
+        <div class="top10-card" onclick="openMemoryByIndex(1)">
+          <div class="top10-rank-num">2</div>
+          <div class="top10-poster-wrap">
+            <img src="img2.jpg" alt="Santorini Clifftop Golden Hour" class="top10-img" loading="lazy">
+            <div class="top10-bottom-caption">
+              <span class="tag-green">99.8% Match</span>
+              <p class="date-name">Santorini Clifftop Golden H...</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Rank 3 -->
+        <div class="top10-card" onclick="openMemoryByIndex(2)">
+          <div class="top10-rank-num">3</div>
+          <div class="top10-poster-wrap">
+            <img src="img3.jpg" alt="Misty Beach Sunset Walk" class="top10-img" loading="lazy">
+            <div class="top10-bottom-caption">
+              <span class="tag-green">Most Rewatched</span>
+              <p class="date-name">Misty Beach Sunset Walk</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Rank 4 -->
+        <div class="top10-card" onclick="openMemoryByIndex(3)">
+          <div class="top10-rank-num">4</div>
+          <div class="top10-poster-wrap">
+            <img src="img4.jpg" alt="Quiet Mornings & Croissants" class="top10-img" loading="lazy">
+            <div class="top10-bottom-caption">
+              <span class="tag-green">#1 Comfort Date</span>
+              <p class="date-name">Quiet Mornings & Croissants</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Rank 5 -->
+        <div class="top10-card" onclick="openMemoryByIndex(4)">
+          <div class="top10-rank-num">5</div>
+          <div class="top10-poster-wrap">
+            <img src="img6.jpg" alt="Golden Coastline Drive" class="top10-img" loading="lazy">
+            <div class="top10-bottom-caption">
+              <span class="tag-green">100% Tearjerker</span>
+              <p class="date-name">Golden Coastline Drive</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Rank 6 -->
+        <div class="top10-card" onclick="openMemoryByIndex(5)">
+          <div class="top10-rank-num">6</div>
+          <div class="top10-poster-wrap">
+            <img src="heroimg.png" alt="Eternity on the Mountain Peak" class="top10-img" loading="lazy">
+            <div class="top10-bottom-caption">
+              <span class="tag-green">Soulmate Special</span>
+              <p class="date-name">Eternity on the Mountain Peak</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Rank 7 -->
+        <div class="top10-card" onclick="openMemoryByIndex(6)">
+          <div class="top10-rank-num">7</div>
+          <div class="top10-poster-wrap">
+            <img src="img2.jpg" alt="Stargazing & Midnight Talks" class="top10-img" loading="lazy">
+            <div class="top10-bottom-caption">
+              <span class="tag-green">♥ Pure Serotonin</span>
+              <p class="date-name">Stargazing & Midnight Talks</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Rank 8 -->
+        <div class="top10-card" onclick="openMemoryByIndex(7)">
+          <div class="top10-rank-num">8</div>
+          <div class="top10-poster-wrap">
+            <img src="img3.jpg" alt="Laughing in the Storm" class="top10-img" loading="lazy">
+            <div class="top10-bottom-caption">
+              <span class="tag-green">Unscripted Magic</span>
+              <p class="date-name">Laughing in the Storm</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ROW 2: CONTINUE WATCHING (HORIZONTAL SCROLLING ROW) -->
+    <section class="media-row-section" id="continue-watching">
+      <div class="row-header">
+        <h2 class="row-title">
+          <span>CONTINUE WATCHING FOR SHRADHHA & ADITYA</span>
+          <svg class="chevron-right" viewBox="0 0 24 24" fill="currentColor"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg>
+        </h2>
+        <div class="row-header-actions">
+          <span class="row-meta-right">6 Photos</span>
+          <a href="gallery.html" class="btn-explore-gallery">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+            <span>Explore Our Gallery</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="row-cards-slider">
+        <!-- Photo 1 -->
+        <div class="media-card">
+          <div class="card-thumb-wrapper">
+            <img src="img1.jpg" alt="First Home" class="card-thumb" loading="lazy">
+          </div>
+        </div>
+
+        <!-- Photo 2 -->
+        <div class="media-card">
+          <div class="card-thumb-wrapper">
+            <img src="img2.jpg" alt="Santorini Clifftop Vow" class="card-thumb" loading="lazy">
+          </div>
+        </div>
+
+        <!-- Photo 3 -->
+        <div class="media-card">
+          <div class="card-thumb-wrapper">
+            <img src="img3.jpg" alt="The Rainy Coast" class="card-thumb" loading="lazy">
+          </div>
+        </div>
+
+        <!-- Photo 4 -->
+        <div class="media-card">
+          <div class="card-thumb-wrapper">
+            <img src="img4.jpg" alt="Café de Flore" class="card-thumb" loading="lazy">
+          </div>
+        </div>
+
+        <!-- Photo 5 -->
+        <div class="media-card">
+          <div class="card-thumb-wrapper">
+            <img src="img6.jpg" alt="Pacific Coastline Drive" class="card-thumb" loading="lazy">
+          </div>
+        </div>
+
+        <!-- Photo 6 -->
+        <div class="media-card">
+          <div class="card-thumb-wrapper">
+            <img src="heroimg.png" alt="Today & Always" class="card-thumb" loading="lazy">
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- SECTION 3: LOVE LETTER ORIGINALS -->
+    <section class="love-letters-section" id="love-letters">
+      <div class="section-title-group">
+        <h2 class="section-heading">LOVE LETTER ORIGINALS</h2>
+        <p class="section-subheading">Written exclusively from the heart.</p>
+      </div>
+
+      <div class="love-letters-grid">
+        <!-- Letter 1 -->
+        <div class="letter-card" onclick="openLetterModal(1)">
+          <div class="letter-badge-label">OPEN WHEN</div>
+          <h3 class="letter-title">You Miss My Silly Face</h3>
+          <p class="letter-body">"Whenever distance feels heavy or your day gets too long, remember that my heart is permanently with you..."</p>
+          <div class="letter-card-bottom">
+            <span class="letter-tag">100% Tearjerker</span>
+            <span class="letter-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+            </span>
+          </div>
+        </div>
+
+        <!-- Letter 2 -->
+        <div class="letter-card" onclick="openLetterModal(2)">
+          <div class="letter-badge-label">DAILY THOUGHTS</div>
+          <h3 class="letter-title">Why I Choose You Daily</h3>
+          <p class="letter-body">"I don't just love you for the grand dates. I love you for the sleepy mornings, the shared chai, and the quiet comfort..."</p>
+          <div class="letter-card-bottom">
+            <span class="letter-tag">99% Pure Truth</span>
+            <span class="letter-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+            </span>
+          </div>
+        </div>
+
+        <!-- Letter 3 -->
+        <div class="letter-card" onclick="openLetterModal(3)">
+          <div class="letter-badge-label">MONSOON VOW</div>
+          <h3 class="letter-title">Midnight Chai Under the Monsoon Rain</h3>
+          <p class="letter-body">"Rain on the windshield, steaming kulhad chai in our hands, and you beside me—I realized I have everything I could ever want..."</p>
+          <div class="letter-card-bottom">
+            <span class="letter-tag">Kulhad Chai & Rain</span>
+            <span class="letter-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="23"></line><line x1="8" y1="23" x2="16" y2="23"></line></svg>
+            </span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 5: STREAMING STATS -->
+    <section class="stats-section" id="stats">
+      <div class="stats-header-area">
+        <span class="stats-red-label">OUR LOVE STORY IN NUMBERS</span>
+        <h2 class="stats-main-title">STREAMING STATS</h2>
+        <p class="stats-description">
+          No algorithmic skips. Zero commercial breaks. Binge-watched together through 842 days of laughter, airport sprints, and 100% mutual happiness.
+        </p>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-box">
+          <div class="stat-number count-up" data-target="842">842</div>
+          <div class="stat-label">Days Watched</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-number stat-green count-up" data-target="9418">9,418</div>
+          <div class="stat-label">Photos Stored</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-number stat-red count-up" data-target="14">14</div>
+          <div class="stat-label">Countries Visited</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-number stat-infinity">&infin;</div>
+          <div class="stat-label">Seasons Remaining</div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+
+  <!-- VIDEO / EPISODE PLAYER MODAL -->
+  <div class="modal-overlay" id="playerModal">
+    <div class="player-container">
+      <button class="modal-back-home-btn" onclick="closePlayerModal()" title="Back" aria-label="Back">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+      </button>
+      <div class="player-screen">
+        <video id="playerVideo" src="video.mp4" playsinline preload="auto"></video>
+        <img id="playerImage" src="heroimg.png" alt="Episode Screen" style="display: none;">
+        <div class="player-cinema-overlay">
+          <div class="player-top-info">
+            <span class="player-badge">USFLIX CINEMA</span>
+            <h3 id="playerTitle">Fav Episode: Aditya & Shradhha</h3>
+          </div>
+          <div class="player-center-play" onclick="togglePlayerPause()">
+            <svg id="playerPlayCenterIcon" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+          </div>
+          <div class="player-controls-bar">
+            <div class="player-progress-track" id="playerProgressBar" onclick="seekPlayer(event)">
+              <div class="player-progress-fill" id="playerProgressFill" style="width: 35%;"></div>
+            </div>
+            <div class="player-controls-bottom">
+              <div class="ctrl-left">
+                <button class="ctrl-btn" onclick="togglePlayerPause()">
+                  <svg id="playPauseIcon" viewBox="0 0 24 24" fill="currentColor"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+                </button>
+                <button class="ctrl-btn" onclick="skipPlayer(10)" title="Forward 10s">
+                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M4 18l8.5-6L4 6v12zm9-12v12l8.5-6L13 6z"/></svg>
+                </button>
+                <span class="ctrl-timer" id="playerTimer">14:20 / 42:00</span>
+              </div>
+              <div class="ctrl-right">
+                <span class="player-hd-badge">4K HDR</span>
+                <button class="ctrl-btn" onclick="togglePlayerFullscreen()">
+                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/></svg>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- EPISODES & MORE INFO MODAL -->
+  <div class="modal-overlay" id="episodesModal">
+    <div class="episodes-modal-box">
+      <button class="modal-back-home-btn" onclick="closeEpisodesModal()" title="Back" aria-label="Back">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+      </button>
+      
+      <!-- Modal Hero Header -->
+      <div class="episodes-modal-hero" style="background-image: url('heroimg.png');">
+        <div class="episodes-hero-overlay">
+          <h2 class="episodes-modal-title">ADITYA & SHRADHHA</h2>
+          <div class="episodes-modal-meta">
+            <span class="match-score">♥ 99.8% Match</span>
+            <span class="meta-seasons">3 Seasons</span>
+            <span class="meta-quality">Ultra HD</span>
+            <span class="maturity-rating">ALL AGES</span>
+          </div>
+          <div class="episodes-modal-actions">
+            <button class="btn btn-primary" onclick="closeEpisodesModal(); openLightbox('img4.jpg', 'S1:E1 · Café de Flore')">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+              <span>Play S1:E1</span>
+            </button>
+            <button class="btn-circle" onclick="toggleMyList(this)" title="Saved in My List">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal Body -->
+      <div class="episodes-modal-body">
+        <div class="episodes-selector-bar">
+          <h3 class="episodes-section-heading">Episodes</h3>
+          <select class="season-select" id="seasonSelect" onchange="changeSeason(this.value)">
+            <option value="3">Season 3: Forever & In Love (2025-2026)</option>
+            <option value="2">Season 2: Growing & Traveling (2023-2024)</option>
+            <option value="1">Season 1: First Sparks & Coffee (2022)</option>
+          </select>
+        </div>
+
+        <div class="episodes-list" id="episodesListContainer">
+          <!-- Populated by JavaScript -->
+        </div>
+
+        <!-- About Aditya & Shradhha -->
+        <div class="about-series-box">
+          <h4 class="about-title">About Aditya & Shradhha: The Complete Series</h4>
+          <p><strong>Starring:</strong> Aditya, Shradhha, and endless cups of cappuccino</p>
+          <p><strong>Genres:</strong> Romantic Comedy, Slice of Life, Travel Adventure, Lifetime Romance</p>
+          <p><strong>This show is:</strong> Heartwarming, Unconditionally Loving, Laugh-out-loud funny, Irreplaceable</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- LOVE LETTER FULL VIEW MODAL -->
+  <div class="modal-overlay" id="letterModal">
+    <div class="letter-modal-paper">
+      <button class="modal-back-home-btn dark-btn" onclick="closeLetterModal()" title="Back" aria-label="Back">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+      </button>
+      <div class="wax-seal">♥</div>
+      <div class="letter-modal-content">
+        <div class="letter-modal-date" id="letterDate">November 17, 2026</div>
+        <h2 class="letter-modal-heading" id="letterTitleDisplay">You Miss My Silly Face</h2>
+        <div class="letter-parchment-text" id="letterFullText">
+          <!-- Text inserted via JS -->
+        </div>
+        <div class="letter-signature">
+          With all my love forever,<br>
+          <em>Shradhha & Aditya</em>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SOUNDTRACKS MODAL PLAYER -->
+  <div class="modal-overlay" id="soundtracksModal">
+    <div class="soundtrack-modal-box">
+      <button class="modal-back-home-btn" onclick="closeSoundtrackModal()" title="Back" aria-label="Back">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+      </button>
+      <div class="soundtrack-modal-header">
+        <div class="spotify-sync">
+          <svg viewBox="0 0 24 24" fill="#1DB954" width="20" height="20"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+          <span>Synced via Spotify</span>
+        </div>
+        <h2 class="soundtrack-modal-title">OUR ORIGINAL SOUNDTRACKS</h2>
+        <p class="soundtrack-modal-desc">Songs that played in the background while we fell in love.</p>
+      </div>
+
+      <div class="soundtrack-cards-grid">
+        <!-- Track 1: Haseen -->
+        <div class="soundtrack-card" id="soundtrack-card-0" onclick="playMusicTrack(0)">
+          <div class="soundtrack-card-thumb-wrap">
+            <img src="music/haseen.jpg" alt="Haseen" class="soundtrack-card-thumb" loading="lazy">
+            <div class="soundtrack-card-overlay">
+              <div class="soundtrack-play-bubble">
+                <svg class="play-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                <svg class="pause-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+              </div>
+            </div>
+            <span class="soundtrack-badge">TRACK 01</span>
+          </div>
+          <div class="soundtrack-card-info">
+            <h3 class="soundtrack-card-title">Haseen</h3>
+            <p class="soundtrack-card-artist">Aditya & Shradhha</p>
+          </div>
+        </div>
+
+        <!-- Track 2: Idhar Zara Sa Dekhlo -->
+        <div class="soundtrack-card" id="soundtrack-card-1" onclick="playMusicTrack(1)">
+          <div class="soundtrack-card-thumb-wrap">
+            <img src="music/idhar zara sa dekhlo.jpg" alt="Idhar Zara Sa Dekhlo" class="soundtrack-card-thumb" loading="lazy">
+            <div class="soundtrack-card-overlay">
+              <div class="soundtrack-play-bubble">
+                <svg class="play-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                <svg class="pause-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+              </div>
+            </div>
+            <span class="soundtrack-badge">TRACK 02</span>
+          </div>
+          <div class="soundtrack-card-info">
+            <h3 class="soundtrack-card-title">Idhar Zara Sa Dekhlo</h3>
+            <p class="soundtrack-card-artist">Aditya & Shradhha</p>
+          </div>
+        </div>
+
+        <!-- Track 3: Jaan Ho Meri -->
+        <div class="soundtrack-card" id="soundtrack-card-2" onclick="playMusicTrack(2)">
+          <div class="soundtrack-card-thumb-wrap">
+            <img src="music/jaan ho meri.webp" alt="Jaan Ho Meri" class="soundtrack-card-thumb" loading="lazy">
+            <div class="soundtrack-card-overlay">
+              <div class="soundtrack-play-bubble">
+                <svg class="play-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                <svg class="pause-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+              </div>
+            </div>
+            <span class="soundtrack-badge">TRACK 03</span>
+          </div>
+          <div class="soundtrack-card-info">
+            <h3 class="soundtrack-card-title">Jaan Ho Meri</h3>
+            <p class="soundtrack-card-artist">Aditya & Shradhha</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- FULLSCREEN PHOTO LIGHTBOX MODAL (SPLIT BESIDE VIEW WITH NEXT / PREV MEMORY) -->
+  <div class="modal-overlay" id="lightboxModal">
+    <button class="modal-back-home-btn" onclick="closeLightbox()" title="Back" aria-label="Back">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+    </button>
+
+    <!-- Floating Navigation Arrows on viewport edges -->
+    <button class="lightbox-arrow prev" onclick="prevMemory(event)" title="Previous Memory (Left Arrow)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg>
+    </button>
+    <button class="lightbox-arrow next" onclick="nextMemory(event)" title="Next Memory (Right Arrow)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+    </button>
+
+    <div class="lightbox-box">
+      <div class="lightbox-img-wrap">
+        <img id="lightboxImage" src="heroimg.png" alt="Photo Fullview">
+      </div>
+      <div class="lightbox-side-panel">
+        <div class="lightbox-side-badge">OUR MOMENT</div>
+        <h3 id="lightboxTitle" class="lightbox-side-title">Parisian Terrace Coffee</h3>
+        <div class="lightbox-accent-line"></div>
+        <p id="lightboxMeta" class="lightbox-side-desc">Our little coffee ritual where you steal half my drink and smile innocent. Wouldn't trade it for the world ♥</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- FLOATING MUSIC PLAYER (WRAPPED IN SMALL MUSIC ICON) -->
+  <div class="floating-music-widget" id="floatingMusicWidget">
+    <!-- REVEALED SONG PLAYER -->
+    <div class="floating-music-bar" id="floatingMusicBar">
+      <div class="floating-music-disc" onclick="openSoundtrackModal()" title="View Soundtrack">
+        <img id="floatingDiscImg" src="music/haseen.jpg" alt="Track Cover">
+        <div class="floating-disc-center"></div>
+      </div>
+      <div class="floating-music-details" onclick="openSoundtrackModal()" title="View Soundtrack">
+        <div class="floating-music-title-row">
+          <span class="floating-music-title" id="floatingTrackTitle">Haseen</span>
+          <div class="floating-eq-wave" id="floatingEqWave">
+            <span></span><span></span><span></span>
+          </div>
+        </div>
+        <span class="floating-music-sub" id="floatingTrackSub">Aditya & Shradhha</span>
+      </div>
+      <div class="floating-music-controls">
+        <button class="floating-ctrl-btn" onclick="prevMusicTrack()" title="Previous Track">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/></svg>
+        </button>
+        <button class="floating-ctrl-btn play-pause-btn" id="floatingPlayPauseBtn" onclick="toggleMusicPlayback()" title="Play / Pause">
+          <svg id="floatingPlayPauseIcon" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+        </button>
+        <button class="floating-ctrl-btn" onclick="nextMusicTrack()" title="Next Track">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg>
+        </button>
+        <button class="floating-ctrl-btn stop-btn" onclick="stopMusicPlayback()" title="Stop Music">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 6h12v12H6z"/></svg>
+        </button>
+        <button class="floating-ctrl-btn collapse-btn" onclick="collapseFloatingPlayer(event)" title="Wrap player in music icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- SMALL MUSIC ICON TRIGGER (WRAPPED STATE) -->
+    <button class="floating-music-trigger" id="floatingMusicTrigger" onclick="toggleFloatingPlayer(event)" title="Soundtrack Player (Tap to reveal)" aria-label="Toggle Soundtrack Player">
+      <div class="trigger-icon-wrap">
+        <svg class="trigger-music-note" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/>
+        </svg>
+      </div>
+      <div class="trigger-mini-eq" id="triggerMiniEq">
+        <span></span><span></span><span></span>
+      </div>
+      <div class="trigger-pulse-ring"></div>
+    </button>
+  </div>
+
+  <audio id="globalAudioPlayer" preload="auto"></audio>
+
+  <!-- AMBIENT FLOATING HEARTS CONTAINER -->
+  <div class="floating-hearts-container" id="floatingHeartsContainer" aria-hidden="true"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>

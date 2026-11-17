@@ -1,0 +1,1312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>USFLIX - Explore Our Gallery (Aditya & Shradhha)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,600;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22 font-weight=%22900%22 fill=%22%23E50914%22>U</text></svg>">
+  <style>
+    /* Dedicated Full Page Gallery Styles */
+    .gallery-page-body {
+      background-color: #111111;
+      min-height: 100vh;
+      color: #ffffff;
+      overflow-x: hidden;
+    }
+
+    /* SMALL BACK TO HOME BUTTON (NO BAR) */
+    .small-back-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      background: rgba(25, 25, 25, 0.85);
+      color: #dddddd;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 50%;
+      text-decoration: none;
+      transition: all 0.25s ease;
+      margin-bottom: 24px;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+    }
+
+    .small-back-btn:hover {
+      background: var(--netflix-red);
+      border-color: var(--netflix-red);
+      color: #ffffff;
+      transform: scale(1.08);
+      box-shadow: 0 4px 15px rgba(229, 9, 20, 0.45);
+    }
+
+    .small-back-btn svg {
+      width: 18px;
+      height: 18px;
+      transition: transform 0.2s ease;
+    }
+
+    .small-back-btn:hover svg {
+      transform: translateX(-2px);
+    }
+
+    .gallery-page-container {
+      max-width: 1040px;
+      margin: 0 auto;
+      padding: 32px 4% 80px 4%;
+    }
+
+    .gallery-top-nav-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 28px;
+      flex-wrap: wrap;
+    }
+
+    .gallery-heading-area {
+      margin-bottom: 26px;
+    }
+
+    .gallery-memories-title {
+      font-family: var(--font-netflix-display);
+      font-size: clamp(34px, 4.2vw, 46px);
+      font-weight: 900;
+      color: #ffffff;
+      letter-spacing: 1.8px;
+      text-transform: uppercase;
+      margin: 0;
+      line-height: 1;
+    }
+
+    .memories-accent-bar {
+      width: 44px;
+      height: 3.5px;
+      background: linear-gradient(90deg, #e50914, #ff3366);
+      border-radius: 3px;
+      margin-top: 8px;
+    }
+
+    .gallery-filter-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      width: 100%;
+    }
+
+    .gallery-actions-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .btn-soundtrack {
+      background: rgba(229, 9, 20, 0.15);
+      border-color: rgba(229, 9, 20, 0.4);
+      color: #ffffff;
+    }
+
+    .btn-soundtrack:hover,
+    .btn-soundtrack.playing {
+      background: #E50914;
+      border-color: #E50914;
+      box-shadow: 0 0 18px rgba(229, 9, 20, 0.6);
+    }
+
+    .filter-group-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .filter-btn {
+      background: #1a1a1a;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: #cccccc;
+      padding: 8px 20px;
+      border-radius: 20px;
+      font-size: 13.5px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      font-family: var(--font-sans);
+    }
+
+    .filter-btn:hover {
+      background: #282828;
+      border-color: rgba(255, 255, 255, 0.3);
+      color: #ffffff;
+    }
+
+    .filter-btn.active {
+      background: var(--netflix-red);
+      border-color: var(--netflix-red);
+      color: #ffffff;
+      box-shadow: 0 0 16px rgba(229, 9, 20, 0.55);
+    }
+
+    .btn-slideshow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      color: #ffffff;
+      padding: 8px 18px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      font-family: var(--font-sans);
+    }
+
+    .btn-slideshow:hover,
+    .btn-slideshow.playing {
+      background: #E50914;
+      border-color: #E50914;
+      box-shadow: 0 0 18px rgba(229, 9, 20, 0.6);
+      transform: translateY(-1px);
+    }
+
+    /* BENTO COLLAGE GRID (Exact vibe from screenshot) */
+    .seamless-gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      width: 100%;
+    }
+
+    .gallery-item {
+      position: relative;
+      border-radius: 18px;
+      overflow: hidden;
+      background: #141414;
+      cursor: pointer;
+      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.5);
+      transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.3s ease;
+      aspect-ratio: 1 / 1;
+    }
+
+    .gallery-item:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.7), 0 0 14px rgba(229, 9, 20, 0.22);
+      z-index: 4;
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.38s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+
+    .gallery-item:hover img {
+      transform: scale(1.018);
+    }
+
+    /* Slot 1: Featured Left Card (spans 2 cols, 2 rows with controlled balanced height) */
+    .gallery-item:nth-child(1) {
+      grid-column: 1 / 3;
+      grid-row: 1 / 3;
+      aspect-ratio: auto;
+      height: 100%;
+      max-height: 350px;
+    }
+
+    /* Slot 2 & 3: Top Right 2 Cards */
+    .gallery-item:nth-child(2) {
+      grid-column: 3;
+      grid-row: 1;
+      aspect-ratio: 1 / 0.74;
+      max-height: 168px;
+    }
+
+    .gallery-item:nth-child(3) {
+      grid-column: 4;
+      grid-row: 1;
+      aspect-ratio: 1 / 0.74;
+      max-height: 168px;
+    }
+
+    /* Slot 4: Row 2 Wide Landscape Card spanning Col 3 & 4 */
+    .gallery-item:nth-child(4) {
+      grid-column: 3 / 5;
+      grid-row: 2;
+      aspect-ratio: auto;
+      height: 100%;
+      max-height: 168px;
+    }
+
+    /* Slots 5 to 12: 4-Column Uniform Rows (Row 3 and Row 4) */
+    .gallery-item:nth-child(n+5) {
+      grid-column: span 1;
+      aspect-ratio: 1 / 1;
+    }
+
+    /* Empty State for Her / Him sections */
+    .gallery-empty-state {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 70px 20px;
+      text-align: center;
+      background: rgba(22, 22, 22, 0.6);
+      border: 1px dashed rgba(255, 255, 255, 0.15);
+      border-radius: 18px;
+      width: 100%;
+      min-height: 320px;
+      grid-column: 1 / -1;
+    }
+
+    .empty-state-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: rgba(229, 9, 20, 0.12);
+      border: 1px solid rgba(229, 9, 20, 0.3);
+      color: var(--netflix-red);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      margin-bottom: 16px;
+    }
+
+    .empty-state-title {
+      font-family: var(--font-netflix-display);
+      font-size: 26px;
+      letter-spacing: 1px;
+      color: #ffffff;
+      margin-bottom: 8px;
+    }
+
+    .empty-state-sub {
+      font-size: 14px;
+      color: #888888;
+      max-width: 400px;
+      line-height: 1.5;
+    }
+
+    @media (max-width: 900px) {
+      .seamless-gallery-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+      }
+      .gallery-item:nth-child(1) {
+        grid-column: 1 / 3;
+        grid-row: auto;
+        aspect-ratio: 4 / 3;
+        min-height: unset;
+      }
+      .gallery-item:nth-child(2) {
+        grid-column: 1;
+        grid-row: auto;
+        aspect-ratio: 1 / 1;
+      }
+      .gallery-item:nth-child(3) {
+        grid-column: 2;
+        grid-row: auto;
+        aspect-ratio: 1 / 1;
+      }
+      .gallery-item:nth-child(4) {
+        grid-column: 1 / 3;
+        grid-row: auto;
+        aspect-ratio: 16 / 9;
+      }
+      .gallery-item:nth-child(n+5) {
+        grid-column: span 1;
+        aspect-ratio: 1 / 1;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .gallery-page-container {
+        padding: 16px 14px 60px 14px;
+      }
+      .gallery-top-nav-bar {
+        gap: 10px;
+        margin-bottom: 18px;
+      }
+      .gallery-filter-bar {
+        gap: 8px;
+      }
+      .filter-btn {
+        padding: 6px 14px;
+        font-size: 12.5px;
+      }
+      .btn-slideshow {
+        padding: 6px 12px;
+        font-size: 12px;
+      }
+      .gallery-memories-title {
+        font-size: clamp(26px, 7vw, 34px);
+      }
+      .lightbox-arrow {
+        width: 38px;
+        height: 38px;
+      }
+      .lightbox-arrow.prev { left: 8px; }
+      .lightbox-arrow.next { right: 8px; }
+      .lightbox-arrow svg { width: 18px; height: 18px; }
+    }
+
+    @media (max-width: 550px) {
+      .seamless-gallery-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+      }
+      .gallery-item {
+        border-radius: 14px;
+      }
+      .gallery-item:nth-child(1) {
+        grid-column: 1 / 3;
+      }
+      .gallery-item:nth-child(4) {
+        grid-column: 1 / 3;
+      }
+    }
+
+    /* Ambient hover vignette */
+    .gallery-item::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, transparent 40%, rgba(0, 0, 0, 0.55) 100%);
+      opacity: 0;
+      transition: opacity 0.35s ease;
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    /* COOL GLOWING RED LINE EFFECT ON HOVER */
+    .gallery-item::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%) scaleX(0);
+      width: 100%;
+      height: 4px;
+      background: linear-gradient(90deg, transparent, #E50914 20%, #ff3844 50%, #E50914 80%, transparent);
+      box-shadow: 0 0 16px rgba(229, 9, 20, 0.95), 0 -2px 10px rgba(229, 9, 20, 0.7);
+      border-radius: 4px 4px 0 0;
+      transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+      z-index: 5;
+    }
+
+    .gallery-item:hover::before {
+      opacity: 1;
+    }
+
+    .gallery-item:hover::after {
+      transform: translateX(-50%) scaleX(1);
+    }
+
+    /* SPLIT LIGHTBOX MODAL: MOMENT STORY BESIDE IMAGE */
+    .lightbox-box {
+      position: relative !important;
+      display: flex !important;
+      flex-direction: row !important;
+      align-items: stretch !important;
+      max-width: 92vw !important;
+      width: 920px !important;
+      max-height: 84vh !important;
+      background-color: #141414 !important;
+      border-radius: 18px !important;
+      overflow: hidden !important;
+      box-shadow: 0 30px 90px rgba(0, 0, 0, 0.98), 0 0 50px rgba(0, 0, 0, 0.8) !important;
+      border: 1px solid rgba(255, 255, 255, 0.14) !important;
+      margin: auto !important;
+    }
+
+    .lightbox-img-wrap {
+      flex: 1 1 58% !important;
+      max-width: 60% !important;
+      max-height: 84vh !important;
+      background: #0a0a0a !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      overflow: hidden !important;
+    }
+
+    .lightbox-img-wrap img {
+      display: block !important;
+      width: 100% !important;
+      height: 100% !important;
+      max-height: 84vh !important;
+      object-fit: cover !important;
+      transition: opacity 0.2s ease;
+    }
+
+    .lightbox-side-panel {
+      flex: 1 1 42% !important;
+      max-width: 40% !important;
+      background: linear-gradient(180deg, #181818 0%, #121212 100%) !important;
+      padding: 38px 28px !important;
+      display: flex !important;
+      flex-direction: column !important;
+      justify-content: center !important;
+      text-align: left !important;
+      border-left: 1px solid rgba(255, 255, 255, 0.08) !important;
+      box-sizing: border-box !important;
+    }
+
+    .lightbox-side-badge {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: #E50914;
+      margin-bottom: 10px;
+    }
+
+    .lightbox-side-title {
+      font-family: var(--font-netflix-display);
+      font-size: 30px;
+      line-height: 1.1;
+      color: #ffffff;
+      margin: 0 0 8px 0;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+    }
+
+    .lightbox-accent-line {
+      width: 44px;
+      height: 3px;
+      background: linear-gradient(90deg, #E50914, #ff3366);
+      border-radius: 2px;
+      margin-bottom: 20px;
+    }
+
+    .lightbox-side-desc {
+      font-family: var(--font-sans);
+      font-size: 14.5px;
+      line-height: 1.6;
+      color: #dddddd;
+      margin: 0;
+      font-style: italic;
+      font-weight: 400;
+    }
+
+    @media (max-width: 768px) {
+      .lightbox-box {
+        flex-direction: column !important;
+        width: 92vw !important;
+        max-height: 88vh !important;
+        overflow-y: auto !important;
+      }
+      .lightbox-img-wrap {
+        flex: unset !important;
+        max-width: 100% !important;
+        max-height: 48vh !important;
+      }
+      .lightbox-side-panel {
+        flex: unset !important;
+        max-width: 100% !important;
+        padding: 20px !important;
+        border-left: none !important;
+        border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
+      }
+      .lightbox-side-title {
+        font-size: 24px;
+      }
+      .lightbox-side-desc {
+        font-size: 13.5px;
+        margin-bottom: 16px;
+      }
+    }
+
+    .lightbox-footer-right {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .lightbox-counter {
+      font-size: 13px;
+      font-weight: 600;
+      color: #999999;
+      background: rgba(255, 255, 255, 0.08);
+      padding: 4px 12px;
+      border-radius: 12px;
+    }
+
+    .lightbox-play-btn {
+      background: none;
+      border: none;
+      color: #ffffff;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      transition: all 0.2s ease;
+    }
+
+    .lightbox-play-btn:hover {
+      background: rgba(255, 255, 255, 0.15);
+      color: #E50914;
+    }
+  </style>
+</head>
+<body class="gallery-page-body">
+
+  <main class="gallery-page-container">
+    <!-- Top Action Bar (Back Button + Filter Tabs + Auto Slideshow) -->
+    <div class="gallery-top-nav-bar">
+      <a href="index.html" class="small-back-btn" title="Back to Home" aria-label="Back to Home">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+      </a>
+
+      <div class="gallery-filter-bar">
+        <div class="filter-group-left">
+          <button class="filter-btn active" onclick="filterGallery('together', this)">Together (12)</button>
+          <button class="filter-btn" onclick="filterGallery('her', this)">Her</button>
+          <button class="filter-btn" onclick="filterGallery('him', this)">Him</button>
+        </div>
+        <div class="gallery-actions-right">
+          <button class="btn-slideshow btn-soundtrack" id="galleryMusicBtn" onclick="toggleGalleryMusic()" title="Play / Pause Soundtrack">
+            <svg id="galleryMusicIcon" viewBox="0 0 24 24" fill="currentColor" width="16" height="16">
+              <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/>
+            </svg>
+            <span id="galleryMusicLabel">Play Song</span>
+          </button>
+          <button class="btn-slideshow" id="slideshowTriggerBtn" onclick="toggleSlideshow()">
+            <svg id="slideshowIcon" viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M8 5v14l11-7z"/></svg>
+            <span id="slideshowBtnLabel">Auto Slideshow</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Together Memories Heading with Gradient Accent Line (Screenshot Vibe) -->
+    <div class="gallery-heading-area">
+      <h1 class="gallery-memories-title" id="galleryHeadingTitle">Together Memories</h1>
+      <div class="memories-accent-bar"></div>
+    </div>
+
+    <!-- ASYMMETRIC BENTO COLLAGE GRID (Exact vibe from screenshot) -->
+    <div class="seamless-gallery-grid" id="galleryGrid">
+      
+      <!-- Photo 1: Big featured card on left (spans 2 cols, 2 rows) -->
+      <div class="gallery-item" data-category="together" onclick="openLightboxByIndex(0)">
+        <img src="heroimg.png" alt="Table For Two" loading="lazy">
+      </div>
+
+      <!-- Photo 2: Top Right 1 -->
+      <div class="gallery-item" data-category="together" onclick="openLightboxByIndex(1)">
+        <img src="img1.jpg" alt="Our Coffee Ritual" loading="lazy">
+      </div>
+
+      <!-- Photo 3: Top Right 2 -->
+      <div class="gallery-item" data-category="together" onclick="openLightboxByIndex(2)">
+        <img src="img2.jpg" alt="Pink Sunset & Silly Grins" loading="lazy">
+      </div>
+
+      <!-- Photo 4: Row 2 Wide Card (spans cols 3 & 4) -->
+      <div class="gallery-item" data-category="together" onclick="openLightboxByIndex(3)">
+        <img src="img6.jpg" alt="Windows Down, Singing Loud" loading="lazy">
+      </div>
+
+      <!-- Photo 5: Row 3 Col 1 -->
+      <div class="gallery-item" data-category="together" onclick="openLightboxByIndex(4)">
+        <img src="img3.jpg" alt="Footprints In Wet Sand" loading="lazy">
+      </div>
+
+      <!-- Photo 6: Row 3 Col 2 -->
+      <div class="gallery-item" data-category="together" onclick="openLightboxByIndex(5)">
+        <img src="img4.jpg" alt="First Date Butterflies" loading="lazy">
+      </div>
+
+      <!-- Photo 7: Row 3 Col 3 -->
+      <div class="gallery-item" data-category="together" onclick="openLightboxByIndex(6)">
+        <img src="v1.jpg" alt="Apartment 4B Move-In" loading="lazy">
+      </div>
+
+      <!-- Photo 8: Row 3 Col 4 -->
+      <div class="gallery-item" data-category="together" onclick="openLightboxByIndex(7)">
+        <img src="hero img.jpg" alt="1 AM Gelato Run" loading="lazy">
+      </div>
+
+      <!-- Photo 9: Row 4 Col 1 -->
+      <div class="gallery-item" data-category="together" onclick="openLightboxByIndex(8)">
+        <img src="img1.jpg" alt="Caught In The Rain" loading="lazy">
+      </div>
+
+      <!-- Photo 10: Row 4 Col 2 -->
+      <div class="gallery-item" data-category="together" onclick="openLightboxByIndex(9)">
+        <img src="img2.jpg" alt="High Above The Clouds" loading="lazy">
+      </div>
+
+      <!-- Photo 11: Row 4 Col 3 -->
+      <div class="gallery-item" data-category="together" onclick="openLightboxByIndex(10)">
+        <img src="img3.jpg" alt="Tangled In Blankets" loading="lazy">
+      </div>
+
+      <!-- Photo 12: Row 4 Col 4 -->
+      <div class="gallery-item" data-category="together" onclick="openLightboxByIndex(11)">
+        <img src="img4.jpg" alt="To A Lifetime Of Adventures" loading="lazy">
+      </div>
+
+      <!-- Empty state placeholder for Her / Him -->
+      <div class="gallery-empty-state" id="galleryEmptyState" style="display: none;">
+        <div class="empty-state-icon">♥</div>
+        <h3 class="empty-state-title" id="emptyTitle">Photos Coming Soon</h3>
+        <p class="empty-state-sub" id="emptySubtitle">This collection will be updated with special solo memories soon.</p>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- LIGHTBOX MODAL WITH PREV / NEXT ARROWS -->
+  <div class="modal-overlay" id="lightboxModal">
+    <!-- Floating Back to Gallery button -->
+    <button class="modal-back-home-btn" onclick="closeLightbox()" title="Back to Gallery" aria-label="Back to Gallery">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+    </button>
+
+    <!-- Floating Navigation Arrows on viewport edges -->
+    <button class="lightbox-arrow prev" onclick="prevLightbox(event)" title="Previous (Left Arrow)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg>
+    </button>
+    <button class="lightbox-arrow next" onclick="nextLightbox(event)" title="Next (Right Arrow)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+    </button>
+
+    <div class="lightbox-box">
+      <div class="lightbox-img-wrap">
+        <img id="lightboxImage" src="heroimg.png" alt="Photo Fullview">
+      </div>
+      <div class="lightbox-side-panel">
+        <div class="lightbox-side-badge">OUR MEMORY</div>
+        <h3 id="lightboxTitle" class="lightbox-side-title">Table For Two</h3>
+        <div class="lightbox-accent-line"></div>
+        <p id="lightboxMeta" class="lightbox-side-desc">Sitting across from you talking about everything and nothing. Food always tastes a million times better when I get to look at you ♥</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- FLOATING MUSIC PLAYER (WRAPPED IN SMALL MUSIC ICON) -->
+  <div class="floating-music-widget" id="floatingMusicWidget">
+    <!-- REVEALED SONG PLAYER -->
+    <div class="floating-music-bar" id="floatingMusicBar">
+      <div class="floating-music-disc" onclick="toggleMusicPlayback()" title="Toggle Play/Pause">
+        <img id="floatingDiscImg" src="music/haseen.jpg" alt="Track Cover">
+        <div class="floating-disc-center"></div>
+      </div>
+      <div class="floating-music-details" onclick="toggleMusicPlayback()" title="Toggle Play/Pause">
+        <div class="floating-music-title-row">
+          <span class="floating-music-title" id="floatingTrackTitle">Haseen</span>
+          <div class="floating-eq-wave" id="floatingEqWave">
+            <span></span><span></span><span></span>
+          </div>
+        </div>
+        <span class="floating-music-sub" id="floatingTrackSub">Aditya & Shradhha</span>
+      </div>
+      <div class="floating-music-controls">
+        <button class="floating-ctrl-btn" onclick="prevMusicTrack()" title="Previous Track">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/></svg>
+        </button>
+        <button class="floating-ctrl-btn play-pause-btn" id="floatingPlayPauseBtn" onclick="toggleMusicPlayback()" title="Play / Pause">
+          <svg id="floatingPlayPauseIcon" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+        </button>
+        <button class="floating-ctrl-btn" onclick="nextMusicTrack()" title="Next Track">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg>
+        </button>
+        <button class="floating-ctrl-btn stop-btn" onclick="stopMusicPlayback()" title="Stop Music">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 6h12v12H6z"/></svg>
+        </button>
+        <button class="floating-ctrl-btn collapse-btn" onclick="collapseFloatingPlayer(event)" title="Wrap player in music icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- SMALL MUSIC ICON TRIGGER (WRAPPED STATE) -->
+    <button class="floating-music-trigger" id="floatingMusicTrigger" onclick="toggleFloatingPlayer(event)" title="Soundtrack Player (Tap to reveal)" aria-label="Toggle Soundtrack Player">
+      <div class="trigger-icon-wrap">
+        <svg class="trigger-music-note" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/>
+        </svg>
+      </div>
+      <div class="trigger-mini-eq" id="triggerMiniEq">
+        <span></span><span></span><span></span>
+      </div>
+      <div class="trigger-pulse-ring"></div>
+    </button>
+  </div>
+
+  <audio id="globalAudioPlayer" preload="auto"></audio>
+
+  <!-- AMBIENT FLOATING HEARTS CONTAINER -->
+  <div class="floating-hearts-container" id="floatingHeartsContainer" aria-hidden="true"></div>
+
+  <script>
+    // Gallery Data with cute 1-2 line love stories
+    const GALLERY_ITEMS = [
+      {
+        src: 'heroimg.png',
+        title: 'Table For Two',
+        meta: 'Sitting across from you talking about everything and nothing. Food always tastes a million times better when I get to look at you ♥'
+      },
+      {
+        src: 'img1.jpg',
+        title: 'Our Coffee Ritual',
+        meta: 'You stealing half of my drink and acting completely innocent. Wouldn\'t trade these sleepy morning smiles for anything in the world.'
+      },
+      {
+        src: 'img2.jpg',
+        title: 'Pink Sunset & Silly Grins',
+        meta: 'Wind in your hair, the sky turning cotton-candy pink, and that goofy laugh. That was the exact second I knew you\'re my forever.'
+      },
+      {
+        src: 'img6.jpg',
+        title: 'Windows Down, Singing Loud',
+        meta: 'Singing totally off-key at the top of our lungs to our favorite song. Just endless highways, cool air, and my favorite passenger.'
+      },
+      {
+        src: 'img3.jpg',
+        title: 'Footprints In Wet Sand',
+        meta: 'Cold sea breeze, wet sand between our toes, and your hand safely tucked in my jacket pocket. Pure, quiet peace.'
+      },
+      {
+        src: 'img4.jpg',
+        title: 'First Date Butterflies',
+        meta: 'My heart was racing so loud I thought you\'d hear it. You laughed at my nervous joke and instantly made me feel at home.'
+      },
+      {
+        src: 'v1.jpg',
+        title: 'Apartment 4B Move-In',
+        meta: 'Surrounded by cardboard boxes, sitting on the bare floor sharing cold takeout. Our very first night in our own little world.'
+      },
+      {
+        src: 'hero img.jpg',
+        title: '1 AM Gelato Run',
+        meta: 'Sneaking out in oversized hoodies in the middle of the night because someone had an emergency sweet craving. Best decision ever.'
+      },
+      {
+        src: 'img1.jpg',
+        title: 'Caught In The Rain',
+        meta: 'Soaking my left shoulder completely just to keep you dry under our tiny umbrella. I\'d gladly walk through any storm with you.'
+      },
+      {
+        src: 'img2.jpg',
+        title: 'High Above The Clouds',
+        meta: 'Standing on top of the mountain holding your hand. Looking out at the world and knowing the best part is right beside me.'
+      },
+      {
+        src: 'img3.jpg',
+        title: 'Tangled In Blankets',
+        meta: 'Chai steaming in the kitchen, rain tapping on the window, and nowhere we need to be. Just sleepy cuddles and sweet silence.'
+      },
+      {
+        src: 'img4.jpg',
+        title: 'To A Lifetime Of Adventures',
+        meta: 'Every single road looks brighter with you riding shotgun. Here\'s to a million more miles, sunset drives, and forever with you.'
+      }
+    ];
+
+    let currentLightboxIndex = 0;
+    let slideshowInterval = null;
+    let isSlideshowPlaying = false;
+
+    const lightboxModal = document.getElementById('lightboxModal');
+    const lightboxImage = document.getElementById('lightboxImage');
+    const lightboxTitle = document.getElementById('lightboxTitle');
+    const lightboxMeta = document.getElementById('lightboxMeta');
+    const lightboxCounter = document.getElementById('lightboxCounter');
+    const slideshowTriggerBtn = document.getElementById('slideshowTriggerBtn');
+    const slideshowBtnLabel = document.getElementById('slideshowBtnLabel');
+    const slideshowIcon = document.getElementById('slideshowIcon');
+
+    function openLightboxByIndex(index) {
+      currentLightboxIndex = (index + GALLERY_ITEMS.length) % GALLERY_ITEMS.length;
+      updateLightboxContent();
+      lightboxModal.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function updateLightboxContent() {
+      const item = GALLERY_ITEMS[currentLightboxIndex];
+      lightboxImage.style.opacity = '0.4';
+      setTimeout(() => {
+        lightboxImage.src = item.src;
+        if (lightboxTitle) lightboxTitle.textContent = item.title;
+        if (lightboxMeta) lightboxMeta.textContent = item.meta;
+        if (lightboxCounter) lightboxCounter.textContent = `Photo ${currentLightboxIndex + 1} of ${GALLERY_ITEMS.length}`;
+        lightboxImage.style.opacity = '1';
+      }, 120);
+    }
+
+    function nextLightbox(e) {
+      if (e) e.stopPropagation();
+      currentLightboxIndex = (currentLightboxIndex + 1) % GALLERY_ITEMS.length;
+      updateLightboxContent();
+    }
+
+    function prevLightbox(e) {
+      if (e) e.stopPropagation();
+      currentLightboxIndex = (currentLightboxIndex - 1 + GALLERY_ITEMS.length) % GALLERY_ITEMS.length;
+      updateLightboxContent();
+    }
+
+    function closeLightbox() {
+      try {
+        stopSlideshow();
+      } catch (err) {
+        console.error("Slideshow stop error:", err);
+      }
+      if (lightboxModal) {
+        lightboxModal.classList.remove('open');
+      }
+      document.body.style.overflow = '';
+    }
+
+    // Slideshow Toggle
+    function toggleSlideshow() {
+      const emptyState = document.getElementById('galleryEmptyState');
+      if (emptyState && emptyState.style.display === 'flex') {
+        alert("This section has no photos yet! Switch to 'Together' to enjoy the slideshow ♥");
+        return;
+      }
+      if (isSlideshowPlaying) {
+        stopSlideshow();
+      } else {
+        startSlideshow();
+      }
+    }
+
+    function startSlideshow() {
+      isSlideshowPlaying = true;
+      if (lightboxModal && !lightboxModal.classList.contains('open')) {
+        openLightboxByIndex(currentLightboxIndex);
+      }
+      if (slideshowTriggerBtn) slideshowTriggerBtn.classList.add('playing');
+      if (slideshowBtnLabel) slideshowBtnLabel.textContent = 'Pause Slideshow';
+      if (slideshowIcon) slideshowIcon.innerHTML = '<path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>';
+
+      // Start romantic soundtrack if not already playing
+      if (!isMusicPlaying) {
+        playMusicTrack(currentTrackIndex >= 0 ? currentTrackIndex : 0);
+      }
+
+      clearInterval(slideshowInterval);
+      slideshowInterval = setInterval(() => {
+        nextLightbox();
+      }, 2800);
+    }
+
+    function stopSlideshow() {
+      isSlideshowPlaying = false;
+      clearInterval(slideshowInterval);
+      if (slideshowTriggerBtn) slideshowTriggerBtn.classList.remove('playing');
+      if (slideshowBtnLabel) slideshowBtnLabel.textContent = 'Auto Slideshow';
+      if (slideshowIcon) slideshowIcon.innerHTML = '<path d="M8 5v14l11-7z"/>';
+    }
+
+    lightboxModal.addEventListener('click', (e) => {
+      if (e.target === lightboxModal) {
+        closeLightbox();
+      }
+    });
+
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+      if (!lightboxModal.classList.contains('open')) return;
+      if (e.key === 'Escape') {
+        closeLightbox();
+      } else if (e.key === 'ArrowRight') {
+        nextLightbox();
+      } else if (e.key === 'ArrowLeft') {
+        prevLightbox();
+      } else if (e.key === ' ') {
+        e.preventDefault();
+        toggleSlideshow();
+      }
+    });
+
+    // Gallery Filter Functionality (Together, Her, Him)
+    function filterGallery(category, btn) {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      const headingTitle = document.getElementById('galleryHeadingTitle');
+      if (headingTitle) {
+        if (category === 'together') {
+          headingTitle.textContent = "Together Memories";
+        } else if (category === 'her') {
+          headingTitle.textContent = "Her Memories";
+        } else if (category === 'him') {
+          headingTitle.textContent = "Him Memories";
+        }
+      }
+
+      const items = document.querySelectorAll('.gallery-item');
+      const emptyState = document.getElementById('galleryEmptyState');
+      const emptyTitle = document.getElementById('emptyTitle');
+      const emptySub = document.getElementById('emptySubtitle');
+
+      let visibleCount = 0;
+      items.forEach(item => {
+        const itemCat = (item.getAttribute('data-category') || '').trim().toLowerCase();
+        const cats = itemCat.split(/\s+/);
+        if (cats.includes(category.toLowerCase())) {
+          item.style.display = '';
+          visibleCount++;
+        } else {
+          item.style.display = 'none';
+        }
+      });
+
+      if (visibleCount === 0) {
+        if (emptyState) {
+          emptyState.style.display = 'flex';
+          if (category === 'her') {
+            emptyTitle.textContent = "Her Special Moments";
+            emptySub.textContent = "Shradhha's solo gallery will be updated here soon ♥";
+          } else if (category === 'him') {
+            emptyTitle.textContent = "His Special Moments";
+            emptySub.textContent = "Aditya's solo gallery will be updated here soon ♥";
+          } else {
+            emptyTitle.textContent = "Photos Coming Soon";
+            emptySub.textContent = "Photos will appear here once added.";
+          }
+        }
+      } else {
+        if (emptyState) {
+          emptyState.style.display = 'none';
+        }
+      }
+    }
+
+    // ==========================================================================
+    // REAL HTML5 SOUNDTRACK ENGINE FOR GALLERY (ADITYA & SHRADHHA PLAYLIST)
+    // ==========================================================================
+    const SOUNDTRACK_PLAYLIST = [
+      {
+        id: 0,
+        title: "Haseen",
+        artist: "Aditya & Shradhha",
+        sub: "Romantic Melodies",
+        file: "music/haseen.mp3",
+        thumb: "music/haseen.jpg"
+      },
+      {
+        id: 1,
+        title: "Idhar Zara Sa Dekhlo",
+        artist: "Aditya & Shradhha",
+        sub: "Acoustic Love",
+        file: "music/idhar zara sa dekhlo.mp3",
+        thumb: "music/idhar zara sa dekhlo.jpg"
+      },
+      {
+        id: 2,
+        title: "Jaan Ho Meri",
+        artist: "Aditya & Shradhha",
+        sub: "Forever Yours",
+        file: "music/jaan ho meri.mp3",
+        thumb: "music/jaan ho meri.webp"
+      }
+    ];
+
+    let currentTrackIndex = 0;
+    let isMusicPlaying = false;
+    let toastTimeout = null;
+
+    const globalAudioPlayer = document.getElementById('globalAudioPlayer');
+    const floatingMusicWidget = document.getElementById('floatingMusicWidget');
+    const floatingMusicBar = document.getElementById('floatingMusicBar');
+    const floatingPlayPauseIcon = document.getElementById('floatingPlayPauseIcon');
+    const floatingTrackTitle = document.getElementById('floatingTrackTitle');
+    const floatingTrackSub = document.getElementById('floatingTrackSub');
+    const floatingDiscImg = document.getElementById('floatingDiscImg');
+    const galleryMusicBtn = document.getElementById('galleryMusicBtn');
+    const galleryMusicIcon = document.getElementById('galleryMusicIcon');
+    const galleryMusicLabel = document.getElementById('galleryMusicLabel');
+
+    function showToast(msg) {
+      let toast = document.getElementById('galleryToast');
+      if (!toast) {
+        toast = document.createElement('div');
+        toast.id = 'galleryToast';
+        toast.className = 'toast-notification';
+        document.body.appendChild(toast);
+      }
+      toast.textContent = msg;
+      toast.classList.add('show');
+      clearTimeout(toastTimeout);
+      toastTimeout = setTimeout(() => {
+        toast.classList.remove('show');
+      }, 2500);
+    }
+
+    function toggleFloatingPlayer(e) {
+      if (e) e.stopPropagation();
+      if (!floatingMusicWidget) return;
+      if (floatingMusicWidget.classList.contains('revealed')) {
+        collapseFloatingPlayer();
+      } else {
+        revealFloatingPlayer();
+      }
+    }
+
+    function revealFloatingPlayer() {
+      if (!floatingMusicWidget) return;
+      updateTrackInfo(currentTrackIndex);
+      floatingMusicWidget.classList.add('revealed');
+    }
+
+    function collapseFloatingPlayer(e) {
+      if (e) e.stopPropagation();
+      if (floatingMusicWidget) {
+        floatingMusicWidget.classList.remove('revealed');
+      }
+    }
+
+    function updateTrackInfo(idx) {
+      const track = SOUNDTRACK_PLAYLIST[idx];
+      if (!track) return;
+      if (floatingTrackTitle) floatingTrackTitle.textContent = track.title;
+      if (floatingTrackSub) floatingTrackSub.textContent = track.artist;
+      if (floatingDiscImg) floatingDiscImg.src = track.thumb;
+      if (galleryMusicLabel) {
+        galleryMusicLabel.textContent = isMusicPlaying ? `Pause Song` : `Play Song`;
+      }
+    }
+
+    function updateMusicUI(isPlaying) {
+      if (floatingMusicWidget) {
+        if (isPlaying) {
+          floatingMusicWidget.classList.add('playing');
+        } else {
+          floatingMusicWidget.classList.remove('playing');
+        }
+      }
+      if (floatingMusicBar) {
+        if (isPlaying) {
+          floatingMusicBar.classList.add('playing');
+        } else {
+          floatingMusicBar.classList.remove('playing');
+        }
+      }
+      if (floatingPlayPauseIcon) {
+        floatingPlayPauseIcon.innerHTML = isPlaying
+          ? '<path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>'
+          : '<path d="M8 5v14l11-7z"/>';
+      }
+      if (galleryMusicBtn) {
+        if (isPlaying) {
+          galleryMusicBtn.classList.add('playing');
+          if (galleryMusicLabel) galleryMusicLabel.textContent = `Pause Song`;
+          if (galleryMusicIcon) {
+            galleryMusicIcon.innerHTML = '<path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>';
+          }
+        } else {
+          galleryMusicBtn.classList.remove('playing');
+          if (galleryMusicLabel) galleryMusicLabel.textContent = `Play Song`;
+          if (galleryMusicIcon) {
+            galleryMusicIcon.innerHTML = '<path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/>';
+          }
+        }
+      }
+    }
+
+    function playMusicTrack(index, startTime) {
+      if (index < 0 || index >= SOUNDTRACK_PLAYLIST.length) return;
+      if (!globalAudioPlayer) return;
+
+      currentTrackIndex = index;
+      const track = SOUNDTRACK_PLAYLIST[index];
+
+      const cleanSrc = encodeURI(track.file);
+      if (globalAudioPlayer.src.indexOf(cleanSrc) === -1 && !globalAudioPlayer.src.endsWith(track.file)) {
+        globalAudioPlayer.src = cleanSrc;
+      }
+      if (startTime && startTime > 0) {
+        globalAudioPlayer.currentTime = startTime;
+      }
+
+      globalAudioPlayer.play().then(() => {
+        isMusicPlaying = true;
+        updateTrackInfo(index);
+        updateMusicUI(true);
+        localStorage.setItem('usflix_track_index', index);
+        localStorage.setItem('usflix_music_playing', 'true');
+        showToast(`Playing Soundtrack: ${track.title} 🎵`);
+      }).catch(err => {
+        console.log("Audio autoplay waiting for user interaction:", err);
+      });
+    }
+
+    function toggleMusicPlayback() {
+      if (!globalAudioPlayer) return;
+      if (globalAudioPlayer.paused) {
+        if (!globalAudioPlayer.src || globalAudioPlayer.src === window.location.href) {
+          playMusicTrack(currentTrackIndex || 0);
+          return;
+        }
+        globalAudioPlayer.play().then(() => {
+          isMusicPlaying = true;
+          updateMusicUI(true);
+          localStorage.setItem('usflix_music_playing', 'true');
+          showToast(`Resumed: ${SOUNDTRACK_PLAYLIST[currentTrackIndex].title}`);
+        }).catch(err => console.log(err));
+      } else {
+        globalAudioPlayer.pause();
+        isMusicPlaying = false;
+        updateMusicUI(false);
+        localStorage.setItem('usflix_music_playing', 'false');
+        showToast(`Paused: ${SOUNDTRACK_PLAYLIST[currentTrackIndex].title}`);
+      }
+    }
+
+    function toggleGalleryMusic() {
+      if (isMusicPlaying) {
+        toggleMusicPlayback();
+      } else {
+        if (!globalAudioPlayer.src || globalAudioPlayer.src === window.location.href) {
+          playMusicTrack(currentTrackIndex || 0);
+        } else {
+          toggleMusicPlayback();
+        }
+      }
+    }
+
+    function nextMusicTrack() {
+      const nextIdx = (currentTrackIndex + 1) % SOUNDTRACK_PLAYLIST.length;
+      playMusicTrack(nextIdx);
+    }
+
+    function prevMusicTrack() {
+      if (globalAudioPlayer && globalAudioPlayer.currentTime > 3) {
+        globalAudioPlayer.currentTime = 0;
+        return;
+      }
+      const prevIdx = (currentTrackIndex - 1 + SOUNDTRACK_PLAYLIST.length) % SOUNDTRACK_PLAYLIST.length;
+      playMusicTrack(prevIdx);
+    }
+
+    function stopMusicPlayback() {
+      if (globalAudioPlayer) {
+        globalAudioPlayer.pause();
+        globalAudioPlayer.currentTime = 0;
+      }
+      isMusicPlaying = false;
+      updateMusicUI(false);
+      collapseFloatingPlayer();
+      localStorage.setItem('usflix_music_playing', 'false');
+      showToast("Soundtrack stopped");
+    }
+
+    if (globalAudioPlayer) {
+      globalAudioPlayer.addEventListener('play', () => {
+        isMusicPlaying = true;
+        updateMusicUI(true);
+      });
+      globalAudioPlayer.addEventListener('pause', () => {
+        isMusicPlaying = false;
+        updateMusicUI(false);
+      });
+      globalAudioPlayer.addEventListener('ended', () => {
+        nextMusicTrack();
+      });
+      globalAudioPlayer.addEventListener('timeupdate', () => {
+        if (globalAudioPlayer.currentTime > 0) {
+          localStorage.setItem('usflix_track_time', globalAudioPlayer.currentTime);
+        }
+      });
+    }
+
+    // Restore soundtrack state from localStorage on page load
+    window.addEventListener('DOMContentLoaded', () => {
+      const savedIndex = localStorage.getItem('usflix_track_index');
+      const wasPlaying = localStorage.getItem('usflix_music_playing') === 'true';
+      const savedTime = parseFloat(localStorage.getItem('usflix_track_time') || '0');
+
+      let idx = 0;
+      if (savedIndex !== null && !isNaN(parseInt(savedIndex))) {
+        idx = parseInt(savedIndex);
+        if (idx < 0 || idx >= SOUNDTRACK_PLAYLIST.length) idx = 0;
+      }
+      currentTrackIndex = idx;
+      updateTrackInfo(idx);
+
+      if (wasPlaying && globalAudioPlayer) {
+        playMusicTrack(idx, savedTime);
+      }
+    });
+
+    // Auto-resume music on first interaction if it was marked playing
+    document.addEventListener('click', (e) => {
+      // Don't trigger if clicked on an audio control directly
+      if (e.target.closest && (e.target.closest('.floating-music-widget') || e.target.closest('#galleryMusicBtn'))) {
+        return;
+      }
+      if (localStorage.getItem('usflix_music_playing') === 'true' && globalAudioPlayer && globalAudioPlayer.paused) {
+        globalAudioPlayer.play().then(() => {
+          isMusicPlaying = true;
+          updateMusicUI(true);
+        }).catch(() => {});
+      }
+    }, { once: true });
+    
+    // Close floating player when clicking outside
+    document.addEventListener('click', (e) => {
+      if (floatingMusicWidget && floatingMusicWidget.classList.contains('revealed')) {
+        if (!floatingMusicWidget.contains(e.target)) {
+          collapseFloatingPlayer();
+        }
+      }
+    });
+
+    // Ambient floating hearts (minimal & sparse)
+    function initGalleryFloatingHearts() {
+      const container = document.getElementById('floatingHeartsContainer');
+      if (!container) return;
+      const heartGlyphs = ['♥', '♡'];
+      function spawnHeart() {
+        if (container.childElementCount >= 4) return;
+        const heart = document.createElement('span');
+        heart.className = 'ambient-heart';
+        heart.textContent = heartGlyphs[Math.floor(Math.random() * heartGlyphs.length)];
+        const startX = (Math.random() * 88 + 6).toFixed(1);
+        const duration = (Math.random() * 5 + 12).toFixed(1);
+        const size = Math.floor(Math.random() * 7 + 11);
+        const opacity = (Math.random() * 0.2 + 0.16).toFixed(2);
+        const swayX = (Math.random() * 34 - 17).toFixed(0) + 'px';
+
+        heart.style.left = startX + 'vw';
+        heart.style.fontSize = size + 'px';
+        heart.style.setProperty('--target-opacity', opacity);
+        heart.style.setProperty('--sway-x', swayX);
+        heart.style.animationDuration = duration + 's';
+        container.appendChild(heart);
+
+        setTimeout(() => { heart.remove(); }, parseFloat(duration) * 1000);
+      }
+      setTimeout(spawnHeart, 800);
+      setTimeout(spawnHeart, 3200);
+      setInterval(spawnHeart, 4500);
+    }
+    window.addEventListener('DOMContentLoaded', initGalleryFloatingHearts);
+  </script>
+</body>
+</html>
