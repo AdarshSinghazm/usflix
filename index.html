@@ -17,16 +17,16 @@
     <div class="nav-left">
       <a href="#home" class="logo">USFLIX</a>
       <nav class="nav-links">
-        <a href="gallery.html" class="nav-gallery-pill">Explore Our Gallery</a>
+        <a href="gallery.html" class="nav-gallery-pill">
+          <span class="desktop-gallery-label">Explore Our Gallery</span>
+          <span class="mobile-gallery-label">Gallery</span>
+        </a>
         <a href="#love-letters">Love Letters</a>
         <a href="javascript:void(0)" onclick="openSoundtrackModal()">Our Soundtracks</a>
         <a href="javascript:void(0)" onclick="openEpisodesModal()">Seasons & Years</a>
       </nav>
     </div>
     <div class="nav-right">
-      <button class="nav-icon-btn" id="searchBtn" title="Search memories">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-      </button>
       <button class="nav-icon-btn" id="soundFxToggle" title="Surround Sound Audio" onclick="toggleAmbientMusic()">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="M4.93 19.07a10 10 0 0 1 0-14.14M2 12h.01M19.07 4.93a10 10 0 0 1 0 14.14M22 12h.01M8.46 15.54a5 5 0 0 1 0-7.08M15.54 8.46a5 5 0 0 1 0 7.08M12 12h.01"/>
@@ -61,15 +61,6 @@
       </div>
     </div>
   </header>
-
-  <!-- SEARCH OVERLAY BAR (Hidden by default) -->
-  <div class="search-bar-container" id="searchBarContainer">
-    <div class="search-input-box">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="search-icon"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-      <input type="text" id="memorySearchInput" placeholder="Search dates, trips, songs, love letters, cafe memories..." autocomplete="off">
-      <button class="search-close-btn" id="searchCloseBtn">&times;</button>
-    </div>
-  </div>
 
   <!-- HERO BILLBOARD SECTION -->
   <section class="hero" id="home">
@@ -233,7 +224,8 @@
           <span class="row-meta-right">6 Photos</span>
           <a href="gallery.html" class="btn-explore-gallery">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
-            <span>Explore Our Gallery</span>
+            <span class="desktop-gallery-label">Explore Our Gallery</span>
+            <span class="mobile-gallery-label">Gallery</span>
           </a>
         </div>
       </div>

@@ -81,10 +81,6 @@ I promise to always be your shelter in every storm, and to never stop sharing la
 const navbar = document.getElementById('navbar');
 const profilePill = document.getElementById('profilePill');
 const profileMenu = document.getElementById('profileMenu');
-const searchBtn = document.getElementById('searchBtn');
-const searchBarContainer = document.getElementById('searchBarContainer');
-const searchCloseBtn = document.getElementById('searchCloseBtn');
-const memorySearchInput = document.getElementById('memorySearchInput');
 
 // Modals
 const playerModal = document.getElementById('playerModal');
@@ -125,26 +121,6 @@ document.addEventListener('click', () => {
   profileMenu.classList.remove('show');
   if (profilePill && profilePill.parentElement) {
     profilePill.parentElement.classList.remove('open');
-  }
-});
-
-// --- SEARCH TOGGLE ---
-searchBtn.addEventListener('click', () => {
-  searchBarContainer.classList.add('open');
-  memorySearchInput.focus();
-});
-
-searchCloseBtn.addEventListener('click', () => {
-  searchBarContainer.classList.remove('open');
-  memorySearchInput.value = '';
-});
-
-// Search functionality
-memorySearchInput.addEventListener('input', (e) => {
-  const query = e.target.value.toLowerCase().trim();
-  if (query.length > 2) {
-    // Check if matches any episode or date
-    console.log("Searching memories for:", query);
   }
 });
 
