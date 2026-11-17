@@ -1,0 +1,8 @@
+{
+  "name": "usflix",
+  "version": "1.0.0",
+  "description": "USFLIX - Aditya & Shradhha: The Complete Series",
+  "scripts": {
+    "build": "echo 'Static site ready for deployment'"
+  }
+}
