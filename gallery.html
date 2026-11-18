@@ -12,7 +12,13 @@
   <style>
     /* Dedicated Full Page Gallery Styles */
     .gallery-page-body {
-      background-color: #111111;
+      background-color: #121013;
+      background-image: 
+        radial-gradient(ellipse 85% 55% at 50% -10%, rgba(229, 9, 20, 0.15) 0%, transparent 70%),
+        radial-gradient(ellipse 65% 45% at 90% 28%, rgba(255, 75, 120, 0.08) 0%, transparent 65%),
+        radial-gradient(ellipse 70% 50% at 10% 60%, rgba(229, 9, 20, 0.06) 0%, transparent 65%),
+        radial-gradient(ellipse 65% 45% at 85% 82%, rgba(255, 60, 100, 0.07) 0%, transparent 60%);
+      background-attachment: fixed;
       min-height: 100vh;
       color: #ffffff;
       overflow-x: hidden;
@@ -71,6 +77,21 @@
 
     .gallery-heading-area {
       margin-bottom: 26px;
+      position: relative;
+    }
+
+    .gallery-heading-area::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: -20px;
+      transform: translateY(-50%);
+      width: 320px;
+      height: 55px;
+      background: radial-gradient(ellipse at left, rgba(255, 75, 110, 0.18) 0%, rgba(229, 9, 20, 0.08) 50%, transparent 80%);
+      filter: blur(18px);
+      pointer-events: none;
+      z-index: -1;
     }
 
     .gallery-memories-title {
@@ -82,6 +103,7 @@
       text-transform: uppercase;
       margin: 0;
       line-height: 1;
+      text-shadow: 0 0 20px rgba(255, 75, 110, 0.22);
     }
 
     .memories-accent-bar {
@@ -190,16 +212,18 @@
       position: relative;
       border-radius: 18px;
       overflow: hidden;
-      background: #141414;
+      background: #191419;
+      border: 1px solid rgba(255, 75, 110, 0.1);
       cursor: pointer;
-      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.5);
-      transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.3s ease;
+      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.5), 0 0 12px rgba(255, 75, 110, 0.04);
+      transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.3s ease, border-color 0.3s ease;
       aspect-ratio: 1 / 1;
     }
 
     .gallery-item:hover {
       transform: translateY(-2px);
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.7), 0 0 14px rgba(229, 9, 20, 0.22);
+      border-color: rgba(255, 75, 110, 0.35);
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.75), 0 0 22px rgba(255, 75, 110, 0.22);
       z-index: 4;
     }
 
