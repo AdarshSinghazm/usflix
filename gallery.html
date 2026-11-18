@@ -414,154 +414,53 @@
       transform: translateX(-50%) scaleX(1);
     }
 
-    /* SPLIT LIGHTBOX MODAL: MOMENT STORY BESIDE IMAGE */
-    .lightbox-box {
-      position: relative !important;
-      display: flex !important;
-      flex-direction: row !important;
-      align-items: stretch !important;
-      max-width: 92vw !important;
-      width: 920px !important;
-      max-height: 84vh !important;
-      background-color: #141414 !important;
-      border-radius: 18px !important;
-      overflow: hidden !important;
-      box-shadow: 0 30px 90px rgba(0, 0, 0, 0.98), 0 0 50px rgba(0, 0, 0, 0.8) !important;
-      border: 1px solid rgba(255, 255, 255, 0.14) !important;
-      margin: auto !important;
-    }
-
-    .lightbox-img-wrap {
-      flex: 1 1 58% !important;
-      max-width: 60% !important;
-      max-height: 84vh !important;
-      background: #0a0a0a !important;
-      display: flex !important;
-      align-items: center !important;
-      justify-content: center !important;
-      overflow: hidden !important;
-    }
-
-    .lightbox-img-wrap img {
-      display: block !important;
-      width: 100% !important;
-      height: 100% !important;
-      max-height: 84vh !important;
-      object-fit: cover !important;
-      transition: opacity 0.2s ease;
-    }
-
-    .lightbox-side-panel {
-      flex: 1 1 42% !important;
-      max-width: 40% !important;
-      background: linear-gradient(180deg, #181818 0%, #121212 100%) !important;
-      padding: 38px 28px !important;
-      display: flex !important;
-      flex-direction: column !important;
-      justify-content: center !important;
-      text-align: left !important;
-      border-left: 1px solid rgba(255, 255, 255, 0.08) !important;
-      box-sizing: border-box !important;
-    }
-
-    .lightbox-side-badge {
-      display: inline-block;
-      font-size: 11px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 1.5px;
-      color: #E50914;
-      margin-bottom: 10px;
-    }
-
-    .lightbox-side-title {
-      font-family: var(--font-netflix-display);
-      font-size: 30px;
-      line-height: 1.1;
-      color: #ffffff;
-      margin: 0 0 8px 0;
-      letter-spacing: 1.2px;
-      text-transform: uppercase;
-    }
-
-    .lightbox-accent-line {
-      width: 44px;
-      height: 3px;
-      background: linear-gradient(90deg, #E50914, #ff3366);
-      border-radius: 2px;
-      margin-bottom: 20px;
-    }
-
-    .lightbox-side-desc {
-      font-family: var(--font-sans);
-      font-size: 14.5px;
-      line-height: 1.6;
-      color: #dddddd;
-      margin: 0;
-      font-style: italic;
-      font-weight: 400;
-    }
-
-    @media (max-width: 768px) {
-      .lightbox-box {
-        flex-direction: column !important;
-        width: 92vw !important;
-        max-height: 88vh !important;
-        overflow-y: auto !important;
-      }
-      .lightbox-img-wrap {
-        flex: unset !important;
-        max-width: 100% !important;
-        max-height: 48vh !important;
-      }
-      .lightbox-side-panel {
-        flex: unset !important;
-        max-width: 100% !important;
-        padding: 20px !important;
-        border-left: none !important;
-        border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
-      }
-      .lightbox-side-title {
-        font-size: 24px;
-      }
-      .lightbox-side-desc {
-        font-size: 13.5px;
-        margin-bottom: 16px;
-      }
-    }
-
-    .lightbox-footer-right {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-    }
-
-    .lightbox-counter {
-      font-size: 13px;
-      font-weight: 600;
-      color: #999999;
-      background: rgba(255, 255, 255, 0.08);
-      padding: 4px 12px;
-      border-radius: 12px;
-    }
-
-    .lightbox-play-btn {
-      background: none;
-      border: none;
-      color: #ffffff;
-      cursor: pointer;
+    /* SIMPLE CLEAN FULLVIEW IMAGE LIGHTBOX */
+    .lightbox-simple-wrap {
+      position: relative;
+      max-width: 90vw;
+      max-height: 88vh;
       display: flex;
       align-items: center;
       justify-content: center;
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      transition: all 0.2s ease;
+      margin: auto;
+      pointer-events: auto;
+      animation: zoomInSimple 0.24s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
-    .lightbox-play-btn:hover {
-      background: rgba(255, 255, 255, 0.15);
-      color: #E50914;
+    .lightbox-simple-wrap img {
+      display: block;
+      max-width: 90vw;
+      max-height: 86vh;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+      border-radius: 12px;
+      box-shadow: 0 25px 70px rgba(0, 0, 0, 0.95), 0 0 35px rgba(0, 0, 0, 0.8);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      transition: opacity 0.2s ease, transform 0.2s ease;
+    }
+
+    @keyframes zoomInSimple {
+      from {
+        opacity: 0;
+        transform: scale(0.95);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .lightbox-simple-wrap {
+        max-width: 94vw;
+        max-height: 82vh;
+      }
+      .lightbox-simple-wrap img {
+        max-width: 94vw;
+        max-height: 80vh;
+        border-radius: 10px;
+      }
     }
   </style>
 </head>
@@ -674,11 +573,11 @@
     </div>
   </main>
 
-  <!-- LIGHTBOX MODAL WITH PREV / NEXT ARROWS -->
+  <!-- LIGHTBOX MODAL (SIMPLE CLEAN FULLVIEW IMAGE) -->
   <div class="modal-overlay" id="lightboxModal">
-    <!-- Floating Back to Gallery button -->
-    <button class="modal-back-home-btn" onclick="closeLightbox()" title="Back to Gallery" aria-label="Back to Gallery">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+    <!-- Floating Close button -->
+    <button class="modal-back-home-btn" onclick="closeLightbox()" title="Close (Esc)" aria-label="Close">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
     </button>
 
     <!-- Floating Navigation Arrows on viewport edges -->
@@ -689,16 +588,8 @@
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
     </button>
 
-    <div class="lightbox-box">
-      <div class="lightbox-img-wrap">
-        <img id="lightboxImage" src="heroimg.png" alt="Photo Fullview">
-      </div>
-      <div class="lightbox-side-panel">
-        <div class="lightbox-side-badge">OUR MEMORY</div>
-        <h3 id="lightboxTitle" class="lightbox-side-title">Table For Two</h3>
-        <div class="lightbox-accent-line"></div>
-        <p id="lightboxMeta" class="lightbox-side-desc">Sitting across from you talking about everything and nothing. Food always tastes a million times better when I get to look at you ♥</p>
-      </div>
+    <div class="lightbox-simple-wrap">
+      <img id="lightboxImage" src="heroimg.png" alt="Photo Fullview">
     </div>
   </div>
 
@@ -846,14 +737,16 @@
 
     function updateLightboxContent() {
       const item = GALLERY_ITEMS[currentLightboxIndex];
-      lightboxImage.style.opacity = '0.4';
+      if (!item) return;
+      lightboxImage.style.opacity = '0.35';
       setTimeout(() => {
         lightboxImage.src = item.src;
+        lightboxImage.alt = item.title || 'Photo Fullview';
         if (lightboxTitle) lightboxTitle.textContent = item.title;
         if (lightboxMeta) lightboxMeta.textContent = item.meta;
         if (lightboxCounter) lightboxCounter.textContent = `Photo ${currentLightboxIndex + 1} of ${GALLERY_ITEMS.length}`;
         lightboxImage.style.opacity = '1';
-      }, 120);
+      }, 100);
     }
 
     function nextLightbox(e) {
