@@ -1081,7 +1081,7 @@ function initFloatingHearts() {
 window.addEventListener('DOMContentLoaded', () => {
   initFloatingHearts();
   checkProfileGateOnLoad();
-  initTriviaQuiz();
+  initDoubleTapHeartReaction();
 });
 
 // ==========================================================================
@@ -1267,189 +1267,93 @@ function checkProfileGateOnLoad() {
 }
 
 // ==========================================================================
-// 3. USFLIX INTERACTIVE TRIVIA / COMPATIBILITY QUIZ
+// 3. DOUBLE-TAP HEART REACTION (INSTAGRAM / TIKTOK STYLE)
 // ==========================================================================
-const TRIVIA_QUESTIONS = [
-  {
-    category: "THE FIRST SPARK",
-    question: "Who fell in love / confessed their feelings first?",
-    options: [
-      { text: "Her Fav (Aditya) — Couldn't resist her smile for a second", note: "Facts! His eyes gave it away on day one 🥰" },
-      { text: "His Darling (Shradhha) — She secretly knew before he even said it", note: "Women's intuition is always 100% correct! ✨" },
-      { text: "Mutual spark from the very first coffee & eye contact", note: "Instant chemistry written in the stars ♥" }
-    ]
-  },
-  {
-    category: "DATE NIGHT MYSTERIES",
-    question: "When deciding what to eat, what actually happens?",
-    options: [
-      { text: "'I'm fine with whatever' (Followed by rejecting 10 suggestions)", note: "Every single date night routine 😂" },
-      { text: "Aditya orders, and Shradhha takes 60% from his plate", note: "Food stolen from his plate just tastes 10x better! 🍟" },
-      { text: "Instant consensus on midnight chai & street food", note: "Unbeatable comfort food lovers ☕" }
-    ]
-  },
-  {
-    category: "THE CLOCK TICKING",
-    question: "Who takes longer getting ready for a date?",
-    options: [
-      { text: "His Darling (Shradhha) — 'Give me 5 mins' = 45 mins of sheer perfection", note: "Worth every single second of waiting! Always 10/10 😍" },
-      { text: "Her Fav (Aditya) — Still searching for matching socks & car keys", note: "He's probably rehearsing his smile in the mirror 😎" },
-      { text: "Equally delayed because we were talking on the phone", note: "Time literally disappears when we talk 📞" }
-    ]
-  },
-  {
-    category: "CINEMA NIGHTS",
-    question: "Who is more likely to fall asleep 15 minutes into a movie?",
-    options: [
-      { text: "His Darling — Cuddled under the blanket, fast asleep in 12 mins", note: "The most peaceful, angelic sleep ever 💤" },
-      { text: "Her Fav — Claiming 'I'm not sleeping, I'm just listening with eyes closed'", note: "The classic lie every guy tells 😂" },
-      { text: "Both of us peacefully knocked out before the climax", note: "Warm cuddles defeat every thriller film! 🍿" }
-    ]
-  },
-  {
-    category: "THE LIFETIME FORMULA",
-    question: "What makes Aditya & Shradhha's love unbreakable?",
-    options: [
-      { text: "Unconditional loyalty & always being each other's safe shelter", note: "A safe space in a crazy world ♥" },
-      { text: "Inside jokes, laughing until our stomachs hurt & crazy adventures", note: "Laughter is our greatest superpower 🎈" },
-      { text: "All of the above & falling in love with each other more every day", note: "100% Perfect Score! Infinite Seasons Ahead 💖" }
-    ]
-  }
-];
+function initDoubleTapHeartReaction() {
+  let lastTapTime = 0;
+  let lastTapX = 0;
+  let lastTapY = 0;
 
-let currentTriviaIndex = 0;
-let isTriviaAnswering = false;
+  function triggerBurst(x, y) {
+    createDoubleTapHeartBurst(x, y);
 
-function initTriviaQuiz() {
-  currentTriviaIndex = 0;
-  isTriviaAnswering = false;
-  renderCurrentTriviaQuestion();
-}
-
-function renderCurrentTriviaQuestion() {
-  const activeView = document.getElementById('triviaActiveView');
-  const resultView = document.getElementById('triviaResultView');
-  const stepIndicator = document.getElementById('triviaStepIndicator');
-  const progressFill = document.getElementById('triviaProgressFill');
-  const categoryElem = document.getElementById('triviaCategory');
-  const questionText = document.getElementById('triviaQuestionText');
-  const optionsGrid = document.getElementById('triviaOptionsGrid');
-  const feedbackBox = document.getElementById('triviaFeedbackBox');
-
-  if (!activeView || !resultView) return;
-
-  activeView.style.display = 'flex';
-  resultView.style.display = 'none';
-  if (feedbackBox) feedbackBox.style.display = 'none';
-
-  const q = TRIVIA_QUESTIONS[currentTriviaIndex];
-  if (!q) return;
-
-  if (stepIndicator) stepIndicator.textContent = `Question ${currentTriviaIndex + 1} of ${TRIVIA_QUESTIONS.length}`;
-  if (progressFill) progressFill.style.width = `${((currentTriviaIndex + 1) / TRIVIA_QUESTIONS.length) * 100}%`;
-  if (categoryElem) categoryElem.textContent = q.category;
-  if (questionText) questionText.textContent = q.question;
-
-  if (optionsGrid) {
-    optionsGrid.innerHTML = '';
-    const letters = ['A', 'B', 'C'];
-    q.options.forEach((opt, idx) => {
-      const btn = document.createElement('button');
-      btn.className = 'trivia-option-btn';
-      btn.onclick = () => selectTriviaAnswer(idx);
-      btn.innerHTML = `
-        <span class="opt-letter">${letters[idx]}</span>
-        <span class="opt-text">${opt.text}</span>
-      `;
-      optionsGrid.appendChild(btn);
-    });
-  }
-
-  isTriviaAnswering = false;
-}
-
-function selectTriviaAnswer(optionIndex) {
-  if (isTriviaAnswering) return;
-  isTriviaAnswering = true;
-
-  const q = TRIVIA_QUESTIONS[currentTriviaIndex];
-  const chosenOpt = q.options[optionIndex];
-
-  // Highlight chosen option
-  const optionsGrid = document.getElementById('triviaOptionsGrid');
-  if (optionsGrid) {
-    const buttons = optionsGrid.querySelectorAll('.trivia-option-btn');
-    buttons.forEach((b, i) => {
-      if (i === optionIndex) {
-        b.classList.add('selected');
-      } else {
-        b.style.opacity = '0.5';
-      }
-    });
-  }
-
-  // Play soft chime note
-  playMelodyNote(523.25, 0.4);
-  setTimeout(() => playMelodyNote(659.25, 0.4), 100);
-
-  // Show feedback
-  const feedbackBox = document.getElementById('triviaFeedbackBox');
-  const feedbackText = document.getElementById('feedbackText');
-  if (feedbackBox && feedbackText) {
-    feedbackText.textContent = chosenOpt.note;
-    feedbackBox.style.display = 'flex';
-  }
-
-  // Next question or result
-  setTimeout(() => {
-    if (currentTriviaIndex < TRIVIA_QUESTIONS.length - 1) {
-      currentTriviaIndex++;
-      renderCurrentTriviaQuestion();
-    } else {
-      showTriviaResult();
+    // Haptic vibration feedback for mobile phones
+    if (navigator.vibrate) {
+      try {
+        navigator.vibrate([35, 30, 45]);
+      } catch (e) {}
     }
-  }, 1100);
-}
 
-function showTriviaResult() {
-  const activeView = document.getElementById('triviaActiveView');
-  const resultView = document.getElementById('triviaResultView');
-  if (activeView && resultView) {
-    activeView.style.display = 'none';
-    resultView.style.display = 'flex';
+    // Play sweet romantic chime note
+    try {
+      playMelodyNote(784, 0.22); // G5 note
+      setTimeout(() => playMelodyNote(987.77, 0.25), 85); // B5 note
+    } catch (e) {}
   }
 
-  // Celebratory sound
-  playNetflixTaDum();
-  triggerHeartCelebration();
+  // Desktop double-click
+  document.addEventListener('dblclick', (e) => {
+    const target = e.target.closest('.media-card, .top10-card, .gallery-item, .lightbox-box, .lightbox-img-wrap, #lightboxImage, .card-thumb-wrapper, .hero-content, .hero, .letter-card, .stat-box');
+    if (target) {
+      triggerBurst(e.clientX, e.clientY);
+    }
+  });
+
+  // Mobile double-tap detection
+  document.addEventListener('touchend', (e) => {
+    const touch = e.changedTouches ? e.changedTouches[0] : null;
+    if (!touch) return;
+
+    const currentTime = Date.now();
+    const tapLength = currentTime - lastTapTime;
+    const dist = Math.hypot(touch.clientX - lastTapX, touch.clientY - lastTapY);
+
+    if (tapLength < 340 && tapLength > 40 && dist < 45) {
+      const target = e.target.closest('.media-card, .top10-card, .gallery-item, .lightbox-box, .lightbox-img-wrap, #lightboxImage, .card-thumb-wrapper, .hero-content, .hero, .letter-card, .stat-box');
+      if (target) {
+        triggerBurst(touch.clientX, touch.clientY);
+      }
+    }
+
+    lastTapTime = currentTime;
+    lastTapX = touch.clientX;
+    lastTapY = touch.clientY;
+  }, { passive: true });
 }
 
-function restartTrivia() {
-  currentTriviaIndex = 0;
-  isTriviaAnswering = false;
-  renderCurrentTriviaQuestion();
-}
+function createDoubleTapHeartBurst(x, y) {
+  const burst = document.createElement('div');
+  burst.className = 'double-tap-heart-burst';
+  burst.style.left = x + 'px';
+  burst.style.top = y + 'px';
 
-function triggerHeartCelebration() {
-  const container = document.getElementById('floatingHeartsContainer');
-  if (!container) return;
+  // Big glowing main heart
+  const mainHeart = document.createElement('div');
+  mainHeart.className = 'double-tap-main-heart';
+  mainHeart.textContent = '♥';
+  burst.appendChild(mainHeart);
 
-  const heartIcons = ['♥', '💖', '✨', '💕', '🥰'];
-  for (let i = 0; i < 18; i++) {
-    setTimeout(() => {
-      const heart = document.createElement('span');
-      heart.className = 'ambient-heart';
-      heart.textContent = heartIcons[Math.floor(Math.random() * heartIcons.length)];
-      heart.style.left = (Math.random() * 85 + 7).toFixed(1) + 'vw';
-      heart.style.fontSize = Math.floor(Math.random() * 14 + 18) + 'px';
-      heart.style.setProperty('--target-opacity', '0.85');
-      heart.style.setProperty('--sway-x', (Math.random() * 60 - 30).toFixed(0) + 'px');
-      heart.style.animationDuration = (Math.random() * 3 + 4).toFixed(1) + 's';
-      container.appendChild(heart);
-
-      setTimeout(() => heart.remove(), 7000);
-    }, i * 120);
+  // Surrounding flying particle sparkles/hearts
+  const particleCount = 6;
+  const particleGlyphs = ['♥', '✨', '💕', '💖', '♥', '✨'];
+  for (let i = 0; i < particleCount; i++) {
+    const p = document.createElement('span');
+    p.className = 'double-tap-particle';
+    p.textContent = particleGlyphs[i];
+    const angle = (i / particleCount) * 2 * Math.PI + (Math.random() * 0.3 - 0.15);
+    const dist = Math.random() * 34 + 38;
+    const sx = Math.cos(angle) * dist;
+    const sy = Math.sin(angle) * dist - 24; // Bias upward
+    p.style.setProperty('--scatter-x', `${sx.toFixed(1)}px`);
+    p.style.setProperty('--scatter-y', `${sy.toFixed(1)}px`);
+    burst.appendChild(p);
   }
+
+  document.body.appendChild(burst);
+
+  setTimeout(() => {
+    burst.remove();
+  }, 1000);
 }
 
 console.log("USFLIX for Aditya & Shradhha loaded successfully.");

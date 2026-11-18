@@ -1223,7 +1223,79 @@
       setTimeout(spawnHeart, 3200);
       setInterval(spawnHeart, 4500);
     }
-    window.addEventListener('DOMContentLoaded', initGalleryFloatingHearts);
+    window.addEventListener('DOMContentLoaded', () => {
+      initGalleryFloatingHearts();
+      initDoubleTapReaction();
+    });
+
+    // Double-tap / double-click Instagram-style heart reaction
+    function initDoubleTapReaction() {
+      let lastTapTime = 0;
+      let lastTapX = 0;
+      let lastTapY = 0;
+
+      function triggerBurst(x, y) {
+        const burst = document.createElement('div');
+        burst.className = 'double-tap-heart-burst';
+        burst.style.left = x + 'px';
+        burst.style.top = y + 'px';
+
+        const mainHeart = document.createElement('div');
+        mainHeart.className = 'double-tap-main-heart';
+        mainHeart.textContent = '♥';
+        burst.appendChild(mainHeart);
+
+        const particleCount = 6;
+        const particleGlyphs = ['♥', '✨', '💕', '💖', '♥', '✨'];
+        for (let i = 0; i < particleCount; i++) {
+          const p = document.createElement('span');
+          p.className = 'double-tap-particle';
+          p.textContent = particleGlyphs[i];
+          const angle = (i / particleCount) * 2 * Math.PI + (Math.random() * 0.3 - 0.15);
+          const dist = Math.random() * 34 + 38;
+          const sx = Math.cos(angle) * dist;
+          const sy = Math.sin(angle) * dist - 24;
+          p.style.setProperty('--scatter-x', `${sx.toFixed(1)}px`);
+          p.style.setProperty('--scatter-y', `${sy.toFixed(1)}px`);
+          burst.appendChild(p);
+        }
+
+        document.body.appendChild(burst);
+
+        if (navigator.vibrate) {
+          try { navigator.vibrate([35, 30, 45]); } catch (e) {}
+        }
+
+        setTimeout(() => burst.remove(), 1000);
+      }
+
+      document.addEventListener('dblclick', (e) => {
+        const target = e.target.closest('.gallery-item, .simple-lightbox-modal, #lightboxSimpleImg, .gallery-heading-area');
+        if (target) {
+          triggerBurst(e.clientX, e.clientY);
+        }
+      });
+
+      document.addEventListener('touchend', (e) => {
+        const touch = e.changedTouches ? e.changedTouches[0] : null;
+        if (!touch) return;
+
+        const currentTime = Date.now();
+        const tapLength = currentTime - lastTapTime;
+        const dist = Math.hypot(touch.clientX - lastTapX, touch.clientY - lastTapY);
+
+        if (tapLength < 340 && tapLength > 40 && dist < 45) {
+          const target = e.target.closest('.gallery-item, .simple-lightbox-modal, #lightboxSimpleImg, .gallery-heading-area');
+          if (target) {
+            triggerBurst(touch.clientX, touch.clientY);
+          }
+        }
+
+        lastTapTime = currentTime;
+        lastTapX = touch.clientX;
+        lastTapY = touch.clientY;
+      }, { passive: true });
+    }
   </script>
 </body>
 </html>

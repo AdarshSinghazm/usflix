@@ -3668,309 +3668,69 @@ body.modal-open .navbar {
 }
 
 /* ==========================================================================
-   SECTION 4: USFLIX INTERACTIVE TRIVIA & COMPATIBILITY
+   DOUBLE-TAP HEART BURST REACTION (INSTAGRAM / TIKTOK STYLE)
    ========================================================================== */
 
-.trivia-section {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  padding: 16px 0;
-}
-
-.interactive-tag-row {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 2px;
-}
-
-.interactive-pill {
-  background: var(--netflix-red);
-  color: #ffffff;
-  font-family: var(--font-netflix-display);
-  font-size: 12px;
-  font-weight: 900;
-  letter-spacing: 1.2px;
-  padding: 2px 7px;
-  border-radius: 3px;
-}
-
-.interactive-subtag {
-  color: #ff4b6e;
-  font-size: 11px;
-  font-weight: 800;
-  letter-spacing: 1px;
-}
-
-.trivia-container-card {
-  position: relative;
-  background: linear-gradient(145deg, #1a141b 0%, #151117 100%);
-  border: 1px solid rgba(255, 75, 110, 0.16);
-  border-radius: 12px;
-  padding: clamp(24px, 3.5vw, 38px);
-  overflow: hidden;
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.65), 0 0 20px rgba(255, 75, 110, 0.08);
-}
-
-.trivia-card-glow {
-  position: absolute;
-  top: -60px;
-  right: -60px;
-  width: 240px;
-  height: 240px;
-  background: radial-gradient(circle, rgba(229, 9, 20, 0.18) 0%, transparent 70%);
-  filter: blur(28px);
+.double-tap-heart-burst {
+  position: fixed;
   pointer-events: none;
-}
-
-.trivia-active-view {
-  display: flex;
-  flex-direction: column;
-  gap: 22px;
-}
-
-.trivia-top-bar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  flex-wrap: wrap;
-}
-
-.trivia-step-indicator {
-  color: #ff4b6e;
-  font-size: 12px;
-  font-weight: 800;
-  letter-spacing: 1.2px;
-  text-transform: uppercase;
-}
-
-.trivia-progress-track {
-  flex-grow: 1;
-  max-width: 320px;
-  height: 6px;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 3px;
-  overflow: hidden;
-}
-
-.trivia-progress-fill {
-  height: 100%;
-  background: linear-gradient(90deg, #E50914, #ff3b65);
-  box-shadow: 0 0 10px rgba(229, 9, 20, 0.7);
-  border-radius: 3px;
-  transition: width 0.35s ease;
-}
-
-.trivia-badge {
-  font-size: 11px;
-  font-weight: 700;
-  color: #888888;
-  letter-spacing: 1px;
-}
-
-.trivia-question-wrap {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.trivia-category {
-  color: #aaaaaa;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-}
-
-.trivia-question-text {
-  font-family: var(--font-netflix-display);
-  font-size: clamp(24px, 2.5vw, 32px);
-  color: #ffffff;
-  letter-spacing: 1px;
-  line-height: 1.15;
-}
-
-.trivia-options-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 12px;
-}
-
-.trivia-option-btn {
-  background: rgba(30, 24, 32, 0.85);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 8px;
-  padding: 14px 18px;
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  cursor: pointer;
-  text-align: left;
-  transition: all 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
-  color: #dddddd;
-}
-
-.trivia-option-btn:hover {
-  background: rgba(45, 34, 48, 0.95);
-  border-color: rgba(255, 75, 110, 0.45);
-  transform: translateX(4px);
-  color: #ffffff;
-  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.4), 0 0 14px rgba(255, 75, 110, 0.15);
-}
-
-.trivia-option-btn.selected {
-  background: linear-gradient(90deg, rgba(229, 9, 20, 0.25) 0%, rgba(255, 59, 101, 0.15) 100%);
-  border-color: #ff3b65;
-  box-shadow: 0 0 20px rgba(229, 9, 20, 0.35);
-}
-
-.opt-letter {
-  width: 32px;
-  height: 32px;
-  border-radius: 6px;
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  color: #ffffff;
-  font-family: var(--font-netflix-display);
-  font-size: 16px;
-  font-weight: 700;
+  z-index: 999999;
+  user-select: none;
+  transform: translate(-50%, -50%);
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-shrink: 0;
-  transition: all 0.2s ease;
 }
 
-.trivia-option-btn:hover .opt-letter,
-.trivia-option-btn.selected .opt-letter {
-  background: var(--netflix-red);
-  border-color: var(--netflix-red);
-  color: #ffffff;
+.double-tap-main-heart {
+  font-size: 80px;
+  line-height: 1;
+  color: #ff2a55;
+  filter: drop-shadow(0 0 24px rgba(255, 42, 85, 0.85)) drop-shadow(0 4px 14px rgba(0, 0, 0, 0.65));
+  animation: heartPopBurst 0.95s cubic-bezier(0.17, 0.89, 0.32, 1.28) forwards;
+  will-change: transform, opacity;
 }
 
-.opt-text {
-  font-family: var(--font-sans);
-  font-size: clamp(14px, 1.4vw, 15.5px);
-  font-weight: 500;
-  line-height: 1.4;
+@keyframes heartPopBurst {
+  0% {
+    transform: scale(0) rotate(-16deg);
+    opacity: 0;
+  }
+  22% {
+    transform: scale(1.35) rotate(0deg);
+    opacity: 1;
+  }
+  42% {
+    transform: scale(1.1) rotate(6deg);
+    opacity: 1;
+  }
+  75% {
+    transform: scale(1.05) translateY(-25px) rotate(-4deg);
+    opacity: 0.92;
+  }
+  100% {
+    transform: scale(1.45) translateY(-85px) rotate(8deg);
+    opacity: 0;
+  }
 }
 
-.trivia-feedback-box {
-  background: rgba(229, 9, 20, 0.12);
-  border: 1px solid rgba(255, 75, 110, 0.3);
-  border-radius: 8px;
-  padding: 12px 18px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  color: #ffcbd6;
-  font-size: 13.5px;
-  font-weight: 600;
-  animation: feedbackSlideIn 0.3s ease;
+.double-tap-particle {
+  position: absolute;
+  pointer-events: none;
+  font-size: 22px;
+  color: #ff5277;
+  filter: drop-shadow(0 0 10px rgba(255, 82, 119, 0.8));
+  animation: heartParticleScatter 0.85s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+  will-change: transform, opacity;
 }
 
-@keyframes feedbackSlideIn {
-  from { opacity: 0; transform: translateY(-6px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.feedback-icon {
-  color: #ff3b65;
-  font-size: 16px;
-}
-
-/* RESULTS VIEW */
-.trivia-result-view {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  gap: 18px;
-  padding: 16px 0;
-  animation: resultPop 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-
-@keyframes resultPop {
-  0% { transform: scale(0.92); opacity: 0; }
-  100% { transform: scale(1); opacity: 1; }
-}
-
-.result-badge-anim {
-  width: 64px;
-  height: 64px;
-  border-radius: 50%;
-  background: radial-gradient(circle, #ff3b65 0%, #e50914 100%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 0 28px rgba(229, 9, 20, 0.65);
-}
-
-.result-crown-icon {
-  width: 32px;
-  height: 32px;
-  color: #ffffff;
-}
-
-.result-match-score {
-  color: #46d369;
-  font-family: var(--font-netflix-display);
-  font-size: 20px;
-  letter-spacing: 1.8px;
-}
-
-.result-title {
-  font-family: var(--font-netflix-display);
-  font-size: clamp(32px, 3.8vw, 44px);
-  color: #ffffff;
-  letter-spacing: 1.5px;
-  text-shadow: 0 0 20px rgba(255, 75, 110, 0.3);
-  margin-top: -8px;
-}
-
-.result-desc {
-  color: #cccccc;
-  font-size: 14.5px;
-  line-height: 1.6;
-  max-width: 580px;
-}
-
-.result-stats-row {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 32px;
-  margin: 8px 0;
-  flex-wrap: wrap;
-}
-
-.result-stat-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 2px;
-}
-
-.result-stat-val {
-  font-family: var(--font-netflix-display);
-  font-size: 32px;
-  color: #ffffff;
-}
-
-.result-stat-lbl {
-  color: #888888;
-  font-size: 12px;
-  font-weight: 600;
-  text-transform: uppercase;
-}
-
-.result-actions {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  flex-wrap: wrap;
-  justify-content: center;
-  margin-top: 10px;
+@keyframes heartParticleScatter {
+  0% {
+    transform: translate(0, 0) scale(0.35);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(var(--scatter-x, 30px), var(--scatter-y, -40px)) scale(1.15);
+    opacity: 0;
+  }
 }
