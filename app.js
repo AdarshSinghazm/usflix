@@ -1078,6 +1078,378 @@ function initFloatingHearts() {
   setInterval(spawnDelicateHeart, 4500);
 }
 
-window.addEventListener('DOMContentLoaded', initFloatingHearts);
+window.addEventListener('DOMContentLoaded', () => {
+  initFloatingHearts();
+  checkProfileGateOnLoad();
+  initTriviaQuiz();
+});
+
+// ==========================================================================
+// 1. CINEMATIC NETFLIX "TA-DUM" SOUND EFFECT (WEB AUDIO API)
+// ==========================================================================
+function playNetflixTaDum() {
+  try {
+    const ctx = getAudioContext();
+    const now = ctx.currentTime;
+
+    // First strike: "TA" (percussive mid hit at t = 0)
+    const osc1 = ctx.createOscillator();
+    const gain1 = ctx.createGain();
+    osc1.type = 'triangle';
+    osc1.frequency.setValueAtTime(120, now);
+    osc1.frequency.exponentialRampToValueAtTime(45, now + 0.16);
+    gain1.gain.setValueAtTime(0.35, now);
+    gain1.gain.exponentialRampToValueAtTime(0.001, now + 0.22);
+    osc1.connect(gain1);
+    gain1.connect(ctx.destination);
+    osc1.start(now);
+    osc1.stop(now + 0.25);
+
+    // Second strike: "DUM" (huge deep resonant cinema boom at t = 0.16)
+    const t2 = now + 0.16;
+
+    // Deep sub bass
+    const subOsc = ctx.createOscillator();
+    const subGain = ctx.createGain();
+    subOsc.type = 'sine';
+    subOsc.frequency.setValueAtTime(80, t2);
+    subOsc.frequency.exponentialRampToValueAtTime(32, t2 + 1.2);
+    subGain.gain.setValueAtTime(0.55, t2);
+    subGain.gain.exponentialRampToValueAtTime(0.0001, t2 + 1.5);
+    subOsc.connect(subGain);
+    subGain.connect(ctx.destination);
+    subOsc.start(t2);
+    subOsc.stop(t2 + 1.6);
+
+    // Cinematic resonant harmonic
+    const brassOsc = ctx.createOscillator();
+    const brassGain = ctx.createGain();
+    brassOsc.type = 'sawtooth';
+    brassOsc.frequency.setValueAtTime(110, t2);
+    brassOsc.frequency.exponentialRampToValueAtTime(98, t2 + 1.6);
+
+    // Low pass filter for cinema warmth
+    const filter = ctx.createBiquadFilter();
+    filter.type = 'lowpass';
+    filter.frequency.setValueAtTime(420, t2);
+    filter.frequency.exponentialRampToValueAtTime(120, t2 + 1.6);
+
+    brassGain.gain.setValueAtTime(0.22, t2);
+    brassGain.gain.exponentialRampToValueAtTime(0.0001, t2 + 1.7);
+
+    brassOsc.connect(filter);
+    filter.connect(brassGain);
+    brassGain.connect(ctx.destination);
+    brassOsc.start(t2);
+    brassOsc.stop(t2 + 1.8);
+
+    // Shimmering chord overtone
+    const shimmerOsc = ctx.createOscillator();
+    const shimmerGain = ctx.createGain();
+    shimmerOsc.type = 'sine';
+    shimmerOsc.frequency.setValueAtTime(330, t2);
+    shimmerGain.gain.setValueAtTime(0.12, t2);
+    shimmerGain.gain.exponentialRampToValueAtTime(0.0001, t2 + 1.3);
+    shimmerOsc.connect(shimmerGain);
+    shimmerGain.connect(ctx.destination);
+    shimmerOsc.start(t2);
+    shimmerOsc.stop(t2 + 1.4);
+
+  } catch (err) {
+    console.log("Ta-Dum waiting for audio context:", err);
+  }
+}
+
+// ==========================================================================
+// 2. "WHO'S WATCHING?" NETFLIX PROFILE SELECTION GATE
+// ==========================================================================
+let currentActiveProfile = 'His Darling';
+
+function selectProfile(name, role) {
+  currentActiveProfile = name;
+  sessionStorage.setItem('usflix_active_profile', name);
+  sessionStorage.setItem('usflix_active_role', role);
+
+  // Play Netflix Ta-Dum sound
+  playNetflixTaDum();
+
+  // Hide Gate
+  const gate = document.getElementById('profileGateModal');
+  if (gate) {
+    gate.classList.add('gate-hidden');
+  }
+
+  // Update Navbar profile
+  updateNavProfile(name);
+
+  // Show personalized toast
+  if (name === 'His Darling') {
+    showToast("Welcome back, His Darling ♥", "Streaming Season 3 · The Forever Chapter with Her Fav");
+  } else if (name === 'Her Fav') {
+    showToast("Welcome back, Her Fav 🎬", "Her favorite person has arrived. Ready for our next chapter!");
+  } else {
+    showToast("Welcome to USFLIX!", "Binge-watching Aditya & Shradhha's complete love story.");
+  }
+}
+
+function showProfileGate() {
+  const gate = document.getElementById('profileGateModal');
+  if (gate) {
+    gate.classList.remove('gate-hidden');
+  }
+  if (profileMenu) {
+    profileMenu.classList.remove('open');
+  }
+}
+
+function updateNavProfile(name) {
+  const navName = document.getElementById('navProfileName');
+  const navAvatarInitial = document.getElementById('navAvatarInitial');
+  const navProfileAvatar = document.getElementById('navProfileAvatar');
+
+  if (navName) {
+    navName.textContent = name === 'Both' ? 'Aditya & Shradhha' : name;
+  }
+
+  if (navAvatarInitial && navProfileAvatar) {
+    if (name === 'His Darling') {
+      navAvatarInitial.textContent = 'S';
+      navProfileAvatar.style.background = 'linear-gradient(135deg, #E50914, #ff3b65)';
+    } else if (name === 'Her Fav') {
+      navAvatarInitial.textContent = 'A';
+      navProfileAvatar.style.background = 'linear-gradient(135deg, #1d4ed8, #0284c7)';
+    } else {
+      navAvatarInitial.textContent = '♥';
+      navProfileAvatar.style.background = 'linear-gradient(135deg, #d97706, #f59e0b)';
+    }
+  }
+
+  const itemDarling = document.getElementById('menuItemDarling');
+  const itemFav = document.getElementById('menuItemFav');
+  const itemBoth = document.getElementById('menuItemBoth');
+
+  if (itemDarling && itemFav && itemBoth) {
+    itemDarling.classList.toggle('active-user', name === 'His Darling');
+    itemFav.classList.toggle('active-user', name === 'Her Fav');
+    itemBoth.classList.toggle('active-user', name === 'Both');
+  }
+}
+
+let toastTimer = null;
+function showToast(title, message) {
+  const toast = document.getElementById('usflixToast');
+  const toastTitle = document.getElementById('toastTitle');
+  const toastMessage = document.getElementById('toastMessage');
+
+  if (!toast || !toastTitle || !toastMessage) return;
+
+  toastTitle.textContent = title;
+  toastMessage.textContent = message;
+
+  toast.classList.add('show');
+
+  if (toastTimer) clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => {
+    toast.classList.remove('show');
+  }, 4500);
+}
+
+function checkProfileGateOnLoad() {
+  const savedProfile = sessionStorage.getItem('usflix_active_profile');
+  const gate = document.getElementById('profileGateModal');
+  if (savedProfile) {
+    currentActiveProfile = savedProfile;
+    updateNavProfile(savedProfile);
+    if (gate) {
+      gate.classList.add('gate-hidden');
+    }
+  }
+}
+
+// ==========================================================================
+// 3. USFLIX INTERACTIVE TRIVIA / COMPATIBILITY QUIZ
+// ==========================================================================
+const TRIVIA_QUESTIONS = [
+  {
+    category: "THE FIRST SPARK",
+    question: "Who fell in love / confessed their feelings first?",
+    options: [
+      { text: "Her Fav (Aditya) — Couldn't resist her smile for a second", note: "Facts! His eyes gave it away on day one 🥰" },
+      { text: "His Darling (Shradhha) — She secretly knew before he even said it", note: "Women's intuition is always 100% correct! ✨" },
+      { text: "Mutual spark from the very first coffee & eye contact", note: "Instant chemistry written in the stars ♥" }
+    ]
+  },
+  {
+    category: "DATE NIGHT MYSTERIES",
+    question: "When deciding what to eat, what actually happens?",
+    options: [
+      { text: "'I'm fine with whatever' (Followed by rejecting 10 suggestions)", note: "Every single date night routine 😂" },
+      { text: "Aditya orders, and Shradhha takes 60% from his plate", note: "Food stolen from his plate just tastes 10x better! 🍟" },
+      { text: "Instant consensus on midnight chai & street food", note: "Unbeatable comfort food lovers ☕" }
+    ]
+  },
+  {
+    category: "THE CLOCK TICKING",
+    question: "Who takes longer getting ready for a date?",
+    options: [
+      { text: "His Darling (Shradhha) — 'Give me 5 mins' = 45 mins of sheer perfection", note: "Worth every single second of waiting! Always 10/10 😍" },
+      { text: "Her Fav (Aditya) — Still searching for matching socks & car keys", note: "He's probably rehearsing his smile in the mirror 😎" },
+      { text: "Equally delayed because we were talking on the phone", note: "Time literally disappears when we talk 📞" }
+    ]
+  },
+  {
+    category: "CINEMA NIGHTS",
+    question: "Who is more likely to fall asleep 15 minutes into a movie?",
+    options: [
+      { text: "His Darling — Cuddled under the blanket, fast asleep in 12 mins", note: "The most peaceful, angelic sleep ever 💤" },
+      { text: "Her Fav — Claiming 'I'm not sleeping, I'm just listening with eyes closed'", note: "The classic lie every guy tells 😂" },
+      { text: "Both of us peacefully knocked out before the climax", note: "Warm cuddles defeat every thriller film! 🍿" }
+    ]
+  },
+  {
+    category: "THE LIFETIME FORMULA",
+    question: "What makes Aditya & Shradhha's love unbreakable?",
+    options: [
+      { text: "Unconditional loyalty & always being each other's safe shelter", note: "A safe space in a crazy world ♥" },
+      { text: "Inside jokes, laughing until our stomachs hurt & crazy adventures", note: "Laughter is our greatest superpower 🎈" },
+      { text: "All of the above & falling in love with each other more every day", note: "100% Perfect Score! Infinite Seasons Ahead 💖" }
+    ]
+  }
+];
+
+let currentTriviaIndex = 0;
+let isTriviaAnswering = false;
+
+function initTriviaQuiz() {
+  currentTriviaIndex = 0;
+  isTriviaAnswering = false;
+  renderCurrentTriviaQuestion();
+}
+
+function renderCurrentTriviaQuestion() {
+  const activeView = document.getElementById('triviaActiveView');
+  const resultView = document.getElementById('triviaResultView');
+  const stepIndicator = document.getElementById('triviaStepIndicator');
+  const progressFill = document.getElementById('triviaProgressFill');
+  const categoryElem = document.getElementById('triviaCategory');
+  const questionText = document.getElementById('triviaQuestionText');
+  const optionsGrid = document.getElementById('triviaOptionsGrid');
+  const feedbackBox = document.getElementById('triviaFeedbackBox');
+
+  if (!activeView || !resultView) return;
+
+  activeView.style.display = 'flex';
+  resultView.style.display = 'none';
+  if (feedbackBox) feedbackBox.style.display = 'none';
+
+  const q = TRIVIA_QUESTIONS[currentTriviaIndex];
+  if (!q) return;
+
+  if (stepIndicator) stepIndicator.textContent = `Question ${currentTriviaIndex + 1} of ${TRIVIA_QUESTIONS.length}`;
+  if (progressFill) progressFill.style.width = `${((currentTriviaIndex + 1) / TRIVIA_QUESTIONS.length) * 100}%`;
+  if (categoryElem) categoryElem.textContent = q.category;
+  if (questionText) questionText.textContent = q.question;
+
+  if (optionsGrid) {
+    optionsGrid.innerHTML = '';
+    const letters = ['A', 'B', 'C'];
+    q.options.forEach((opt, idx) => {
+      const btn = document.createElement('button');
+      btn.className = 'trivia-option-btn';
+      btn.onclick = () => selectTriviaAnswer(idx);
+      btn.innerHTML = `
+        <span class="opt-letter">${letters[idx]}</span>
+        <span class="opt-text">${opt.text}</span>
+      `;
+      optionsGrid.appendChild(btn);
+    });
+  }
+
+  isTriviaAnswering = false;
+}
+
+function selectTriviaAnswer(optionIndex) {
+  if (isTriviaAnswering) return;
+  isTriviaAnswering = true;
+
+  const q = TRIVIA_QUESTIONS[currentTriviaIndex];
+  const chosenOpt = q.options[optionIndex];
+
+  // Highlight chosen option
+  const optionsGrid = document.getElementById('triviaOptionsGrid');
+  if (optionsGrid) {
+    const buttons = optionsGrid.querySelectorAll('.trivia-option-btn');
+    buttons.forEach((b, i) => {
+      if (i === optionIndex) {
+        b.classList.add('selected');
+      } else {
+        b.style.opacity = '0.5';
+      }
+    });
+  }
+
+  // Play soft chime note
+  playMelodyNote(523.25, 0.4);
+  setTimeout(() => playMelodyNote(659.25, 0.4), 100);
+
+  // Show feedback
+  const feedbackBox = document.getElementById('triviaFeedbackBox');
+  const feedbackText = document.getElementById('feedbackText');
+  if (feedbackBox && feedbackText) {
+    feedbackText.textContent = chosenOpt.note;
+    feedbackBox.style.display = 'flex';
+  }
+
+  // Next question or result
+  setTimeout(() => {
+    if (currentTriviaIndex < TRIVIA_QUESTIONS.length - 1) {
+      currentTriviaIndex++;
+      renderCurrentTriviaQuestion();
+    } else {
+      showTriviaResult();
+    }
+  }, 1100);
+}
+
+function showTriviaResult() {
+  const activeView = document.getElementById('triviaActiveView');
+  const resultView = document.getElementById('triviaResultView');
+  if (activeView && resultView) {
+    activeView.style.display = 'none';
+    resultView.style.display = 'flex';
+  }
+
+  // Celebratory sound
+  playNetflixTaDum();
+  triggerHeartCelebration();
+}
+
+function restartTrivia() {
+  currentTriviaIndex = 0;
+  isTriviaAnswering = false;
+  renderCurrentTriviaQuestion();
+}
+
+function triggerHeartCelebration() {
+  const container = document.getElementById('floatingHeartsContainer');
+  if (!container) return;
+
+  const heartIcons = ['♥', '💖', '✨', '💕', '🥰'];
+  for (let i = 0; i < 18; i++) {
+    setTimeout(() => {
+      const heart = document.createElement('span');
+      heart.className = 'ambient-heart';
+      heart.textContent = heartIcons[Math.floor(Math.random() * heartIcons.length)];
+      heart.style.left = (Math.random() * 85 + 7).toFixed(1) + 'vw';
+      heart.style.fontSize = Math.floor(Math.random() * 14 + 18) + 'px';
+      heart.style.setProperty('--target-opacity', '0.85');
+      heart.style.setProperty('--sway-x', (Math.random() * 60 - 30).toFixed(0) + 'px');
+      heart.style.animationDuration = (Math.random() * 3 + 4).toFixed(1) + 's';
+      container.appendChild(heart);
+
+      setTimeout(() => heart.remove(), 7000);
+    }, i * 120);
+  }
+}
 
 console.log("USFLIX for Aditya & Shradhha loaded successfully.");
